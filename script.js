@@ -1,17 +1,5 @@
 window.onload = function() {
 
-// imput elements definition
-
-
-// document get elements
-	let msgNumber = '555666'
-		docType = 'ordrsp',
-		btnStart = document.getElementById('start'),
-		btnCopy = document.getElementById('copy')
-		;
-
-	let code = document.getElementById('code');
-
 // html construction elements:
 	let lb = '</div><div class="brackets">&lt;</div><div class="tagname">',
 		rb = '</div><div class="brackets">&gt;</div>',
@@ -22,9 +10,7 @@ window.onload = function() {
 		;
 
 // eancom construction elements
-	let rootTagOpen = lb+docType+rb,
-		rootTagClose = clb+docType+crb,
-		unhOpen = lb+'uhn'+rb,
+	let unhOpen = lb+'uhn'+rb,
 		unhClose = clb+'uhn'+crb,
 		e0062Open = lb+'E0062'+rb,
 		e0062Close = clb+'E0062'+crb,
@@ -163,26 +149,73 @@ window.onload = function() {
 		e0074Open = lb+'E0074'+rb,
 		e0074Close = clb+'E0074'+crb
 		;
+
+
+// get static elements
+	let codeField = document.getElementById('code'),
+		btnStart = document.getElementById('start'),
+		btnCopy = document.getElementById('copy')
+		;
+
 // eancom tags and structure
 	let outputDocument;
 
 
 // generation of the document
-	function generate() {
-		if (docType=='ordrsp') {
-			outputDocument = '1';
+
+
+
+
+	function generate(){
+// get dynamic data
+		let docType = document.getElementsByName('doctype');	
+		if(docType[0].checked){
+			docType = docType[0].value;
 		}
-		else if (docType=='desadv') {
-			outputDocument = '2';
+		else if(docType[1].checked){
+			docType = 'desadv';
 		}
-		else if (docType=='recadv') {
-			outputDocument = '3';
+		else if(docType[2].checked){
+			docType = 'recadv';
 		}
 		else {
-			outputDocument = 'Something went wrong... pls change anything and try again.';
+			alert('pls select document type');
+			return;
 		}
-		code.innerHTML = outputDocument;
-	}
+
+		let docNumber = document.getElementById('doc-number').value,
+			docStatus = document.getElementById('status').value,
+			docDate = document.getElementById('date-doc').value,
+			deliveryDate = document.getElementById('date-delivery').value,
+			orderDate = document.getElementById('date-order').value,
+			orderNumber = document.getElementById('order-number').value,
+			distrGln = document.getElementById('gln-by'.value),
+			supplierGln = document.getElementById('gln-su').value,
+			deliveryPointGln = document.getElementById('gln-dt').value
+			;
+		function show() {
+			outputDocument = e0074Open+docType+e0062Close+br+docNumber+br+docStatus+br+docDate+br+deliveryDate;
+			codeField.innerHTML = outputDocument;
+		}
+		show();
+ 	}
+
+ 	
+
+	
 	btnStart.addEventListener('click', generate);
+
+	btnCopy.addEventListener('click', function () {
+	let codeCopy = document.getElementById('code'); 
+	let range = document.createRange();
+	range.selectNode(codeCopy); 
+	window.getSelection().addRange(range);
+	try { 
+		document.execCommand('copy'); 
+	} catch(err) { 
+		console.log('Can`t copy, boss'); 
+	}
+	window.getSelection().removeAllRanges();
+	});
 
 }
