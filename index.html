@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<title>Easy XML creator</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" type="image/png" sizes="32x32" href="">
+	<script type="text/javascript" src="script.js"></script>
+</head>
+<body>
+	<header>
+		<div class="wrp">
+			<div class="logo">Logo</div>
+			<div><h1>Easy XML creator</h1></div>
+			<div>settings</div>
+		</div>
+	</header>
+	<main>
+		<div class="col">
+			<button id="start" class="btn">generate</button>
+			<div class="left">	
+				<h4>Enter document data</h4>
+				<div class="doctype-section">
+					<div class="form">
+						<h5>Document type</h5>
+						<div class="radio-item">
+							<input type="radio" id="desadv" name="doctype" value="desadv">
+							<label for="ordrsp">ordrsp</label>
+						</div>
+						<div class="radio-item">
+							<input type="radio" id="desadv" name="doctype" value="desadv">
+							<label for="desadv">desadv</label>
+						</div>
+						<div class="radio-item">
+							<input type="radio" id="recadv" name="doctype" value="recadv" disabled>
+							<label for="recadv">recadv</label>
+						</div>
+					</div>
+				</div>
+				<div class="ordrsp-section">
+					<div class="ordrsp-section-main">
+						<div class="form">
+							<label for="doc-number">Document number</label>
+							<input id="doc-number" type="text">
+						</div>
+						<div class="form">
+							<label for="status">Document status</label>
+							<input id="status" type="text">
+						</div>
+						<div class="form">
+							<label for="date-doc">Document date</label>
+							<input id="date-doc" type="text">
+						</div>
+						<div class="form">
+							<label for="date-delivery">Delivery date</label>
+							<input id="date-delivery" type="text">
+						</div>
+						<div class="form">
+							<label for="date-order">Order date</label>
+							<input id="date-order" type="text">
+						</div>
+						<div class="form">
+							<label for="order-number">Order number</label>
+							<input id="order-number" type="text">
+						</div>
+						<div class="form">
+							<label for="gln-by">Distributor GLN</label>
+							<input id="gln-by" type="text">
+						</div>
+						<div class="form">
+							<label for="gln-su">Supplier GLN</label>
+							<input id="gln-su" type="text">
+						</div>
+						<div class="form">
+							<label for="gln-dt">Delivery point GLN</label>
+							<input id="gln-dt" type="text">
+						</div>
+						<div class="form">
+							<label for="positions">Number of positions</label>
+							<input id="positions" type="number" min="0" max="20">
+						</div>
+					</div>
+					<div class="ordrsp-section-positions">
+						<div class="order-item">
+							<h6>item - 1</h6>
+							<div class="form">
+								<label for="">Name</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">shtrih code</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">Ordered</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">confirmed</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">price</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">vat</label>
+								<input id="" type="text">
+							</div>
+						</div>
+						<div class="order-item">
+							<h6>item - 2</h6>
+							<div class="form">
+								<label for="">Name</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">shtrih code</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">Ordered</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">confirmed</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">price</label>
+								<input id="" type="text">
+							</div>
+							<div class="form">
+								<label for="">vat</label>
+								<input id="" type="text">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<button id="copy" class="btn">copy</button>
+			<div id="code" class="right">
+				<!--
+					<div class="tab">&nbsp;&nbsp;</div>
+					<div class="brackets">&lt;</div>
+					<div class="tagname">taaaag</div>
+					<div class="brackets">&gt;</div>
+					Some Stuff
+					<div class="brackets">&lt;</div>
+					<div class="slash">/</div>
+					<div class="tagname">taaaag</div>
+					<div class="brackets">&gt;</div>
+					<p>&#13;</p>
+				-->
+			</div>
+		</div>
+	</main>
+	<footer>
+		<div class="wrp">
+			<div>version: <span>0.0.1</span></div>
+			<div>created by Me 2019</div>
+		</div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,150 @@
+/* ##### common ##### */
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	font-family: Arial, sans-serif;
+	font-size: 0.9rem;
+}
+.wrp {
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+	height: 100%;
+	width: 90vw;
+	margin: 0 auto;
+}
+.wrp>div {
+	align-self: center;
+}
+
+body {
+	height: 100vh;
+}
+
+/* ##### header section ##### */
+
+header {
+	height: 5%;
+	background: gray;
+}
+h1{
+	font-size: 1.2rem;
+}
+.logo {
+
+}
+
+/* ##### main screen ##### */
+main {
+	height: 92%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.col {
+	display: flex;
+	justify-content: center;
+	flex: 1 1 50%;
+	background-color: silver;
+	padding: 3px;
+	align-self: stretch;
+	position: relative;
+}
+.left {
+	flex: 1 1 50%;
+	padding: 15px 40px;
+	overflow-y: scroll;
+	background: #fff;
+}
+.left h4 {
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.left h5 {
+	font-size: 0.9rem;
+	font-weight: normal;
+	padding-bottom: 8px;
+}
+.left .form {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px 0;
+}
+.left .form label {
+	width: 40%;
+}
+.left .form input {
+	width: 60%;
+}
+
+
+.doctype-section {
+}
+.ordrsp-section-main {
+}
+.ordrsp-section-positions {
+}
+
+
+
+
+.right {
+	flex: 1 1 50%;
+	padding: 15px 28px;
+	overflow-y: scroll;
+}
+.right div {
+	display: inline-block;
+}
+
+/* ##### buttons ##### */
+
+.btn {
+	position: absolute;
+	right: 40px;
+	bottom: 40px;
+	padding: 10px 0;
+	width: 110px;
+	text-transform: uppercase;
+	background-color: green;
+	color: white;
+	outline: none;
+	border: 1px solid #333;
+	border-radius: 8px;
+	cursor: pointer;
+	box-shadow: 1px 1px 1px #333;
+	z-index: 100;
+}
+.btn:active {
+	box-shadow: -1px -1px 1px #333;
+	right: 39px;
+	bottom: 39px;
+}
+
+
+/* ##### code style ##### */
+#code {
+	background: #1A2942;
+	text-transform: uppercase;
+	color: white;
+}
+.brackets, .slash {
+	color: silver;
+}
+.tagname {
+	color: #1DAE19;
+	text-transform: uppercase;
+}
+
+
+/* ##### footer ##### */
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100vw;
+	height: 3%;
+	background: gray;
+}
