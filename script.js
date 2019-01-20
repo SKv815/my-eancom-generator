@@ -6,11 +6,17 @@ window.onload = function() {
 		br = '<p>&#13;</p>',
 		clb = '<div class="brackets">&lt;</div><div class="slash">/</div><div class="tagname">',
 		crb = rb+br,
-		tab = '<div class="tab">&nbsp;&nbsp;</div>'
+		tab = '<div class="tab">&nbsp;&nbsp;</div>',
+		tab2 = tab+tab,
+		tab3 = tab2+tab,
+		tab4 = tab3+tab,
+		tab5 = tab4+tab
 		;
 
 // eancom construction elements
-	let unhOpen = lb+'uhn'+rb,
+	let mainTagOpen,
+		mainTagClose,
+		unhOpen = lb+'uhn'+rb,
 		unhClose = clb+'uhn'+crb,
 		e0062Open = lb+'E0062'+rb,
 		e0062Close = clb+'E0062'+crb,
@@ -150,33 +156,34 @@ window.onload = function() {
 		e0074Close = clb+'E0074'+crb
 		;
 
+// notifications
+
 
 // get static elements
 	let codeField = document.getElementById('code'),
 		btnStart = document.getElementById('start'),
-		btnCopy = document.getElementById('copy')
+		btnCopy = document.getElementById('copy'),
+		xmlDocument
 		;
 
-// eancom tags and structure
-	let outputDocument;
 
-
-// generation of the document
-
-
-
-
-	function generate(){
+	function getData(){
 // get dynamic data
 		let docType = document.getElementsByName('doctype');	
 		if(docType[0].checked){
 			docType = docType[0].value;
+			mainTagOpen = lb+docType+rb;
+			mainTagClose = clb+docType+crb;
 		}
 		else if(docType[1].checked){
-			docType = 'desadv';
+			docType = docType[1].value;
+			mainTagOpen = lb+docType+rb;
+			mainTagClose = clb+docType+crb;
 		}
 		else if(docType[2].checked){
-			docType = 'recadv';
+			docType = docType[2].value;
+			mainTagOpen = lb+docType+rb;
+			mainTagClose = clb+docType+crb;
 		}
 		else {
 			alert('pls select document type');
@@ -184,7 +191,6 @@ window.onload = function() {
 		}
 
 		let docNumber = document.getElementById('doc-number').value,
-			docStatus = document.getElementById('status').value,
 			docDate = document.getElementById('date-doc').value,
 			deliveryDate = document.getElementById('date-delivery').value,
 			orderDate = document.getElementById('date-order').value,
@@ -193,17 +199,36 @@ window.onload = function() {
 			supplierGln = document.getElementById('gln-su').value,
 			deliveryPointGln = document.getElementById('gln-dt').value
 			;
-		function show() {
-			outputDocument = e0074Open+docType+e0062Close+br+docNumber+br+docStatus+br+docDate+br+deliveryDate;
-			codeField.innerHTML = outputDocument;
+// creating eancom document matching it's typed, by sections
+		function createEancom() {
+			if(docType=='ordrsp'){
+				xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'555666'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+'ean007'+e0057Close+tab2+s009Close+tab+unhClose;
+				xmlDocumentMain = tab+orderDate+br;
+				xmlDocumentSummary = mainTagClose;
+			}
+			else if(docType=='desadv'){
+				xmlDocumentHeader = mainTagOpen+br;
+				xmlDocumentMain = tab+docNumber+br;
+				xmlDocumentSummary = mainTagClose;
+			}
+			else if(docType=='recadv'){
+				xmlDocumentHeader = mainTagOpen+br;
+				xmlDocumentMain = tab+docNumber+br;
+				xmlDocumentSummary = mainTagClose;
+			}
+			else {
+				alert('something went really wrong! How did you do that??');
+			}
 		}
-		show();
+		createEancom();
+		xmlDocument = xmlDocumentHeader+xmlDocumentMain+xmlDocumentSummary;
+		codeField.innerHTML = xmlDocument;
  	}
 
  	
 
 	
-	btnStart.addEventListener('click', generate);
+	btnStart.addEventListener('click', getData);
 
 	btnCopy.addEventListener('click', function () {
 	let codeCopy = document.getElementById('code'); 

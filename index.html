@@ -11,157 +11,125 @@
 </head>
 <body>
 	<header>
-		<div class="wrp">
-			<div class="logo">Logo</div>
-			<div><h1>Easy XML creator</h1></div>
-			<div>settings</div>
-		</div>
+		<div class="row">
+		<div class="logo">Logo</div>
+		<div><h1>Easy XML generator</h1></div>
+		<div>settings</div>
 	</header>
 	<main>
-		<div class="col">
+		<div class="half-screen">
 			<button id="start" class="btn">generate</button>
-			<div class="left">	
-				<h4>Enter document data</h4>
-				<div class="doctype-section">
-					<h5>Document type</h5>
-					<div class="form">
+			<div class="left">
+				<div class="row">
+					<h5>Document data</h5>
+				</div>
+				<div class="row">
+					<div class="col-4">Doc type</div>
+					<div class="col-4">
 						<div class="radio-item">
-							<input type="radio" id="ordrsp" name="doctype" value="ordrsp">
-							<label for="ordrsp">ordrsp</label>
+							<input id="ordrsp" type="radio" name="doctype" value="ordrsp">
+							<label for="ordrsp"><span>ordrsp</span></label>
 						</div>
+					</div>
+					<div class="col-4">
 						<div class="radio-item">
-							<input type="radio" id="desadv" name="doctype" value="desadv">
+							<input id="desadv" type="radio" name="doctype" value="desadv">
 							<label for="desadv">desadv</label>
 						</div>
+					</div>
+					<div class="col-4">
 						<div class="radio-item">
-							<input type="radio" id="recadv" name="doctype" value="recadv">
+							<input id="recadv" type="radio" name="doctype" value="recadv">
 							<label for="recadv">recadv</label>
 						</div>
 					</div>
 				</div>
-				<div class="ordrsp-section">
-					<div class="ordrsp-section-main">
-						<div class="form">
+				<div class="row">
+					<div class="col-2">
+						<div class="input-item">
 							<label for="doc-number">Document number</label>
-							<input id="doc-number" type="text">
-						</div>
-						<div class="form">
-							<label for="status">Document status</label>
-							<input id="status" type="text">
-						</div>
-						<div class="form">
-							<label for="date-doc">Document date</label>
-							<input id="date-doc" type="text">
-						</div>
-						<div class="form">
-							<label for="date-delivery">Delivery date</label>
-							<input id="date-delivery" type="text">
-						</div>
-						<div class="form">
-							<label for="date-order">Order date</label>
-							<input id="date-order" type="text">
-						</div>
-						<div class="form">
-							<label for="order-number">Order number</label>
-							<input id="order-number" type="text">
-						</div>
-						<div class="form">
-							<label for="gln-by">Distributor GLN</label>
-							<input id="gln-by" type="text">
-						</div>
-						<div class="form">
-							<label for="gln-su">Supplier GLN</label>
-							<input id="gln-su" type="text">
-						</div>
-						<div class="form">
-							<label for="gln-dt">Delivery point GLN</label>
-							<input id="gln-dt" type="text">
-						</div>
-						<div class="form">
-							<label for="positions">Number of positions</label>
-							<input id="positions" type="number" min="0" max="20">
+							<input type="text" id="doc-number" maxlength="10">
 						</div>
 					</div>
-					<div class="ordrsp-section-positions">
-						<div class="order-item">
-							<h6>item - 1</h6>
-							<div class="form">
-								<label for="">Name</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">shtrih code</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">Ordered</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">confirmed</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">price</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">vat</label>
-								<input id="" type="text">
-							</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="date-doc">Document date</label>
+							<input type="date" id="date-doc">
 						</div>
-						<div class="order-item">
-							<h6>item - 2</h6>
-							<div class="form">
-								<label for="">Name</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">shtrih code</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">Ordered</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">confirmed</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">price</label>
-								<input id="" type="text">
-							</div>
-							<div class="form">
-								<label for="">vat</label>
-								<input id="" type="text">
-							</div>
+					</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="date-order">Order date</label>
+							<input type="date" id="date-order">
 						</div>
+					</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="date-delivery">Delivery date</label>
+							<input type="date" id="date-delivery">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="order-number">Order number</label>
+							<input type="text" id="order-number" maxlength="10">
+						</div>	
+					</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="gln-by">Distr GLN</label>
+							<input type="text" id="gln-by" maxlength="13">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="gln-su">Manufacturer GLN</label>
+							<input type="text" id="gln-su" maxlength="13">
+						</div>
+					</div>
+					<div class="col-2">
+						<div class="input-item">
+							<label for="gln-dt">Delivery point GLN</label>
+							<input type="text" id="gln-dt" maxlength="13">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-2">
+						<div class="input-item">
+							<label for="positions">Positions in document</label>
+							<select name="positions" id="positions">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="pos-section">
+					<div class="pos">
+						123
+						ss
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="col">
+		<div class="half-screen">
 			<button id="copy" class="btn">copy</button>
 			<div id="code" class="right">
-				<!--
-					<div class="tab">&nbsp;&nbsp;</div>
-					<div class="brackets">&lt;</div>
-					<div class="tagname">taaaag</div>
-					<div class="brackets">&gt;</div>
-					Some Stuff
-					<div class="brackets">&lt;</div>
-					<div class="slash">/</div>
-					<div class="tagname">taaaag</div>
-					<div class="brackets">&gt;</div>
-					<p>&#13;</p>
-				-->
 			</div>
 		</div>
 	</main>
 	<footer>
-		<div class="wrp">
-			<div>version: <span>0.0.1</span></div>
+		<div class="row">
+			<div class="version">version: <span>0.0.1</span></div>
 			<div>created by Me 2019</div>
 		</div>
 	</footer>

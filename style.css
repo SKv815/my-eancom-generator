@@ -7,16 +7,21 @@
 	font-family: Arial, sans-serif;
 	font-size: 0.9rem;
 }
-.wrp {
+.row {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
-	align-items: stretch;
-	height: 100%;
-	width: 90vw;
-	margin: 0 auto;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	width: 100%;
+	background: yellow;
 }
-.wrp>div {
-	align-self: center;
+.col-2 {
+	flex-basis: 50%;
+	background: blue;
+}
+.col-4 {
+	flex-basis: 25%;
 }
 
 body {
@@ -27,14 +32,13 @@ body {
 
 header {
 	height: 5%;
+	padding: 1px 40px;
 	background: gray;
 }
 h1{
 	font-size: 1.2rem;
 }
-.logo {
 
-}
 
 /* ##### main screen ##### */
 main {
@@ -43,7 +47,7 @@ main {
 	flex-direction: row;
 	justify-content: center;
 }
-.col {
+.half-screen {
 	display: flex;
 	justify-content: center;
 	flex: 1 1 50%;
@@ -58,46 +62,77 @@ main {
 	overflow-y: scroll;
 	background: #fff;
 }
-.left h4 {
-	text-align: center;
-	padding-bottom: 10px;
-}
-
 .left h5 {
-	font-size: 0.9rem;
-	font-weight: normal;
-	padding-bottom: 8px;
+	font-size: 1.2rem;
+	margin: 0 auto 10px;
 }
-.left .form {
+
+.radio-item {
+	width: 80%;
+}
+
+label[for="ordrsp"]::before {
+	content: "ordrsp";
+}
+label[for="desadv"]::before {
+	content: "desadv";
+}
+label[for="recadv"]::before {
+	content: "recadv";
+}
+
+.radio-item label::before {
+	display: inline-block;
+	visibility: visible;
+	position: relative;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: silver;
+	text-transform: uppercase;
+	text-align: center;
+	border-radius: 5px;
+	line-height: 150%;
+	cursor: pointer;
+}
+.radio-item label:hover::before {
+	background-color: gray;
+}
+.radio-item input:checked + label::before {
+	background-color: gray;
+	color: #fff;
+}
+.radio-item input {
+	visibility: hidden;
+}
+.radio-item label {
+	visibility: hidden;
+}
+
+.input-item {
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
-	margin: 10px 0;
+	align-items: flex-start;
+	background: pink;
 }
-.left .form label {
-	width: 40%;
+.input-item label {
+	background: red;
+	flex-basis: 40%;
+	max-width: 40%;
 }
-.left .form input {
-	width: 60%;
+.input-item input {
+	flex-basis: 60%;
+	max-width: 60%;
 }
-
-
-.doctype-section {
-}
-.ordrsp-section-main {
-}
-.ordrsp-section-positions {
-}
-
-
-
-
 .right {
 	flex: 1 1 50%;
 	padding: 15px 28px;
 	overflow-y: scroll;
 }
 .right div {
-	display: inline-block;
+	display: inline;
 }
 
 /* ##### buttons ##### */
@@ -108,13 +143,13 @@ main {
 	bottom: 40px;
 	padding: 10px 0;
 	width: 110px;
+	cursor: pointer;
 	text-transform: uppercase;
 	background-color: green;
 	color: white;
 	outline: none;
 	border: 1px solid #333;
 	border-radius: 8px;
-	cursor: pointer;
 	box-shadow: 1px 1px 1px #333;
 	z-index: 100;
 }
@@ -146,5 +181,16 @@ footer {
 	bottom: 0;
 	width: 100vw;
 	height: 3%;
-	background: gray;
+	padding: 1px 40px;
+	background: transparent;
+}
+
+
+@media screen and (max-width: 800px) {
+	.col-2 {
+		flex-basis: 100%;
+	}
+	.col-4 {
+		flex-basis: 50%;
+	}
 }
