@@ -1,35 +1,54 @@
+#test {
+	position: absolute;
+	background: red;
+}
 /* ##### common ##### */
-
 * {
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
 	font-family: Arial, sans-serif;
 	font-size: 0.9rem;
+	color: #222;
 }
-.row {
+.cont {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	flex-wrap: wrap;
 	align-items: flex-start;
 	width: 100%;
-	background: yellow;
+}
+.col {
+	flex-basis: 100%;
 }
 .col-2 {
 	flex-basis: 50%;
-	background: blue;
 }
 .col-4 {
 	flex-basis: 25%;
 }
-
+input {
+	border-radius: 5px;
+	padding: 0 5px;
+}
+select {
+	border-radius: 5px;
+	background-color: silver;
+	min-width: 57%;
+}
 body {
 	height: 100vh;
 }
+.visible {
+	visibility: visible;
+}
+.hidden {
+	visibility: hidden;
+}
+/* #################### */
 
-/* ##### header section ##### */
-
+/* ##### main screen layout ##### */
 header {
 	height: 5%;
 	padding: 1px 40px;
@@ -39,8 +58,6 @@ h1{
 	font-size: 1.2rem;
 }
 
-
-/* ##### main screen ##### */
 main {
 	height: 92%;
 	display: flex;
@@ -66,7 +83,25 @@ main {
 	font-size: 1.2rem;
 	margin: 0 auto 10px;
 }
+.right {
+	flex: 1 1 50%;
+	padding: 15px 28px;
+	overflow-y: scroll;
+}
+.right div {
+	display: inline;
+}
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100vw;
+	height: 3%;
+	padding: 1px 40px;
+	background: transparent;
+}
+/* #################### */
 
+/* ##### main inputs style ##### */
 .radio-item {
 	width: 80%;
 }
@@ -109,34 +144,70 @@ label[for="recadv"]::before {
 .radio-item label {
 	visibility: hidden;
 }
-
 .input-item {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: flex-start;
-	background: pink;
+	margin-bottom: 10px;
+	font-size: 0;
 }
 .input-item label {
-	background: red;
-	flex-basis: 40%;
-	max-width: 40%;
+	display: inline-block;
+	width: 40%;
 }
 .input-item input {
-	flex-basis: 60%;
-	max-width: 60%;
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 57%;
+	height: 1.5rem;
+	margin-right: 3%;
 }
-.right {
-	flex: 1 1 50%;
-	padding: 15px 28px;
-	overflow-y: scroll;
+.input-item select {
+	vertical-align: top;
 }
-.right div {
-	display: inline;
+/* #################### */
+
+/* ##### pos ##### */
+.pos-section {
+	padding-top: 0;
 }
+.item-number {
+	position: relative;
+	border-top: 1px solid silver;
+	padding-top: 1rem;
+	margin-top: 1rem;
+}
+
+.pos-section h6 {
+	display: inline-block;
+	position: absolute;
+	font-size: 1.1rem;
+	top: -1rem;
+	left: 2rem;
+	background-color: #fff;
+	color: #444;
+	padding: 5px;
+}
+
+.pos-name {
+	margin-bottom: 10px;
+	font-size: 0;
+}
+.pos-name label {
+	display: inline-block;
+	width: 20%;
+
+}
+.pos-name input {
+	vertical-align: top;
+	box-sizing: border-box;
+	width: 78.5%;
+	height: 1.5rem;
+	margin-right: 1.5%;
+}
+
+
+
+/* #################### */
 
 /* ##### buttons ##### */
-
 .btn {
 	position: absolute;
 	right: 40px;
@@ -158,7 +229,7 @@ label[for="recadv"]::before {
 	right: 39px;
 	bottom: 39px;
 }
-
+/* #################### */
 
 /* ##### code style ##### */
 #code {
@@ -173,24 +244,24 @@ label[for="recadv"]::before {
 	color: #1DAE19;
 	text-transform: uppercase;
 }
-
-
-/* ##### footer ##### */
-footer {
-	position: fixed;
-	bottom: 0;
-	width: 100vw;
-	height: 3%;
-	padding: 1px 40px;
-	background: transparent;
+.tab {
+	letter-spacing: 0.2rem;
 }
+/* #################### */
 
 
+/* ##### media ##### */
 @media screen and (max-width: 800px) {
 	.col-2 {
 		flex-basis: 100%;
 	}
 	.col-4 {
 		flex-basis: 50%;
+	}
+	.pos-name label {
+		width: 100%;
+	}
+	.pos-name input {
+		width: 97%;
 	}
 }

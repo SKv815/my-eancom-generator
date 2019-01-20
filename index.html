@@ -10,8 +10,9 @@
 	<script type="text/javascript" src="script.js"></script>
 </head>
 <body>
+	<button id="test">test</button>
 	<header>
-		<div class="row">
+		<div class="cont">
 		<div class="logo">Logo</div>
 		<div><h1>Easy XML generator</h1></div>
 		<div>settings</div>
@@ -20,10 +21,10 @@
 		<div class="half-screen">
 			<button id="start" class="btn">generate</button>
 			<div class="left">
-				<div class="row">
+				<div class="cont">
 					<h5>Document data</h5>
 				</div>
-				<div class="row">
+				<div class="cont">
 					<div class="col-4">Doc type</div>
 					<div class="col-4">
 						<div class="radio-item">
@@ -44,79 +45,115 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-2">
-						<div class="input-item">
-							<label for="doc-number">Document number</label>
-							<input type="text" id="doc-number" maxlength="10">
-						</div>
+				<div class="cont main-section hidden">
+					<div class="col-2 input-item">
+						<label for="doc-number">Document number</label>
+						<input type="text" id="doc-number" maxlength="10">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="date-doc">Document date</label>
-							<input type="date" id="date-doc">
-						</div>
+					<div class="col-2 input-item">
+						<label for="date-doc">Document date</label>
+						<input type="date" id="date-doc">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="date-order">Order date</label>
-							<input type="date" id="date-order">
-						</div>
+					<div class="col-2 input-item">
+						<label for="date-order">Order date</label>
+						<input type="date" id="date-order">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="date-delivery">Delivery date</label>
-							<input type="date" id="date-delivery">
-						</div>
+					<div class="col-2 input-item">
+						<label for="date-delivery">Delivery date</label>
+						<input type="date" id="date-delivery">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="order-number">Order number</label>
-							<input type="text" id="order-number" maxlength="10">
-						</div>	
+					<div class="col-2 input-item">
+						<label for="order-number">Order number</label>
+						<input type="text" id="order-number" maxlength="10">
+					</div>	
+					<div class="col-2 input-item">
+						<label for="gln-by">Distr GLN</label>
+						<input type="text" id="gln-by" maxlength="13">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="gln-by">Distr GLN</label>
-							<input type="text" id="gln-by" maxlength="13">
-						</div>
+					<div class="col-2 input-item">
+						<label for="gln-su">Manufacturer GLN</label>
+						<input type="text" id="gln-su" maxlength="13">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="gln-su">Manufacturer GLN</label>
-							<input type="text" id="gln-su" maxlength="13">
-						</div>
+					<div class="col-2 input-item">
+						<label for="gln-dt">Delivery point GLN</label>
+						<input type="text" id="gln-dt" maxlength="13">
 					</div>
-					<div class="col-2">
-						<div class="input-item">
-							<label for="gln-dt">Delivery point GLN</label>
-							<input type="text" id="gln-dt" maxlength="13">
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-2">
-						<div class="input-item">
-							<label for="positions">Positions in document</label>
-							<select name="positions" id="positions">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-							</select>
-						</div>
+					<div class="col-2 input-item">
+						<label for="positions">Positions in document</label>
+						<select name="positions" id="positions">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
 					</div>
 				</div>
 				<div class="pos-section">
-					<div class="pos">
-						123
-						ss
+					<div id="pos1" class="pos">
+						<div class="cont">
+							<div class="col item-number">
+								<h6 class=>Item 1</h6>
+							</div>
+						</div>
+						<div class="cont">
+							<div class="col pos-name">
+								<label for="pos1-name">Item name</label>
+								<input type="text" id="pos-name1" maxlength="50">
+							</div>
+							<div class="col-2 input-item">
+								<label for="order-unit">Order unit</label>
+								<select name="order-unit" id="order-unit">
+									<option value="Pieces">Packages</option>
+									<option value="Packages">Pieces</option>
+								</select>
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-ean-pce">EAN code</label>
+								<input type="text" id="pos1-ean" maxlength="15" placeholder="ean of a pic">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-ean-pa">EAN code</label>
+								<input type="text" id="pos1-ean" maxlength="15" placeholder="ean of a pack">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-art">Art.</label>
+								<input type="text" id="pos1-art">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-ordered">Ordered</label>
+								<input type="text" id="pos1-ordered">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-confirmed">Confirmed</label>
+								<input type="text" id="pos1-confirmed">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-shipped">Shipped</label>
+								<input type="text" id="pos1-shipped">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-pceinpa">Pieces in package</label>
+								<input type="text" id="pos1-pceinpa">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-pricenovat">Price without VAT</label>
+								<input type="text" id="pos1-pricenovat">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-pricevat">Price with VAT</label>
+								<input type="text" id="pos1-pricevat">
+							</div>
+							<div class="col-2 input-item">
+								<label for="pos1-vat">tax rate</label>
+								<input class="tax" type="number" id="pos1-vat" min="0" max="100" placeholder="20%">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -128,7 +165,7 @@
 		</div>
 	</main>
 	<footer>
-		<div class="row">
+		<div class="cont">
 			<div class="version">version: <span>0.0.1</span></div>
 			<div>created by Me 2019</div>
 		</div>

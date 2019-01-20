@@ -60,6 +60,10 @@ window.onload = function() {
 		rffClose = clb+'RFF'+crb,
 		c506Open = lb+'C506'+rb,
 		c506Close = clb+'C506'+crb,
+		e1153Open = lb+'E1153'+rb,
+		e1153Close = clb+'E1153'+crb,
+		e1154Open = lb+'E1154'+rb,
+		e1154Close = clb+'E1154'+crb,
 		sg3Open = lb+'SG3'+rb,
 		sg3Close = clb+'SG3'+crb,
 		nadOpen = lb+'NAD'+rb,
@@ -153,43 +157,97 @@ window.onload = function() {
 		untOpen = lb+'UNT'+rb,
 		untClose = clb+'UNT'+crb,
 		e0074Open = lb+'E0074'+rb,
-		e0074Close = clb+'E0074'+crb
-		;
+		e0074Close = clb+'E0074'+crb;
 
-// notifications
+	let eancomCode,
+		bgmCode,
+		messageFunctionCode,
+		xmlDocumentHeader,
+		xmlDocumentParticipants,
+		xmlDocumentMain,
+		xmlDocumentSummary,
+		xmlDocument;
 
-
-// get static elements
-	let codeField = document.getElementById('code'),
+	let radioButtons = document.getElementsByName('doctype'),
+		mainSection = document.getElementsByClassName('main-section')[0],
+		codeField = document.getElementById('code'),
 		btnStart = document.getElementById('start'),
-		btnCopy = document.getElementById('copy'),
-		xmlDocument
-		;
+		btnCopy = document.getElementById('copy');
+
+
+	function getDocType () {
+		if(radioButtons[0].checked){
+			docType = radioButtons[0].value;
+			mainTagOpen = lb+docType+rb;
+			mainTagClose = clb+docType+crb;
+			eancomCode = 'EAN008';
+			bgmCode = '231';
+			messageFunctionCode = '4';
+		}
+		else if(radioButtons[1].checked){
+			docType = radioButtons[1].value;
+			mainTagOpen = lb+docType+rb;
+			mainTagClose = clb+docType+crb;
+			eancomCode = 'EAN007';
+			bgmCode = '351';
+			messageFunctionCode = '4';
+		}
+		else if(radioButtons[2].checked){
+			docType = radioButtons[2].value;
+			mainTagOpen = lb+docType+rb;
+			mainTagClose = clb+docType+crb;
+			eancomCode = 'EAN006';
+			bgmCode = '632';
+			messageFunctionCode = '9';
+		}
+		else {
+			alert('pls select document type');
+		}
+	};
+	let i;
+	for (i = 0; i < radioButtons.length; i++) {
+		radioButtons[i].addEventListener('click', getDocType);
+		radioButtons[i].addEventListener('click', function(){
+			mainSection.classList.remove('hidden');
+			mainSection.classList.add('visible');
+		});
+	};
+
+
+
+
+
+// 0000000000000000000000000
+// price trimmer
+
+	let positions = document.getElementById('positions'),
+		positionLines,
+		test = document.getElementById('test');
+		test.addEventListener('click', function(){
+			let aaa = document.getElementById('pos1-pricenovat').value;
+			aaa = aaa.replace(/ /g,"");
+			aaa = aaa.replace(/,/g,".");
+			console.log(aaa);
+		});
+
+// 0000000000000000000000000
+
+
+
+
+
+
+
+
+// Form tuning
+	positions.addEventListener('change', function(){
+		positionLines = positions.value;
+		alert(positionLines);
+	});
 
 
 	function getData(){
 // get dynamic data
-		let docType = document.getElementsByName('doctype');	
-		if(docType[0].checked){
-			docType = docType[0].value;
-			mainTagOpen = lb+docType+rb;
-			mainTagClose = clb+docType+crb;
-		}
-		else if(docType[1].checked){
-			docType = docType[1].value;
-			mainTagOpen = lb+docType+rb;
-			mainTagClose = clb+docType+crb;
-		}
-		else if(docType[2].checked){
-			docType = docType[2].value;
-			mainTagOpen = lb+docType+rb;
-			mainTagClose = clb+docType+crb;
-		}
-		else {
-			alert('pls select document type');
-			return;
-		}
-
 		let docNumber = document.getElementById('doc-number').value,
 			docDate = document.getElementById('date-doc').value,
 			deliveryDate = document.getElementById('date-delivery').value,
@@ -197,35 +255,36 @@ window.onload = function() {
 			orderNumber = document.getElementById('order-number').value,
 			distrGln = document.getElementById('gln-by'.value),
 			supplierGln = document.getElementById('gln-su').value,
-			deliveryPointGln = document.getElementById('gln-dt').value
-			;
+			deliveryPointGln = document.getElementById('gln-dt').value;
+			
+			docDate = docDate.replace(/-/g,"");
+			orderDate = orderDate.replace(/-/g,"");
+			deliveryDate = deliveryDate.replace(/-/g,"");
+
 // creating eancom document matching it's typed, by sections
 		function createEancom() {
+			xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'123'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+eancomCode+e0057Close+tab2+s009Close+tab+unhClose+tab+bgmOpen+br+tab2+c002Open+br+tab3+e1001Open+bgmCode+e1001Close+tab2+c002Close+tab2+c106Open+br+tab3+e1004Open+docNumber+e1004Close+tab2+c106Close+tab2+e1225Open+messageFunctionCode+e1225Close+tab+bgmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
 			if(docType=='ordrsp'){
-				xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'555666'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+'ean007'+e0057Close+tab2+s009Close+tab+unhClose;
-				xmlDocumentMain = tab+orderDate+br;
-				xmlDocumentSummary = mainTagClose;
+				xmlDocumentParticipants = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
+				xmlDocumentMain ='mmm1';
 			}
 			else if(docType=='desadv'){
-				xmlDocumentHeader = mainTagOpen+br;
-				xmlDocumentMain = tab+docNumber+br;
-				xmlDocumentSummary = mainTagClose;
+				xmlDocumentParticipants = '222';		
+				xmlDocumentMain = 'mmmm222';
 			}
 			else if(docType=='recadv'){
-				xmlDocumentHeader = mainTagOpen+br;
-				xmlDocumentMain = tab+docNumber+br;
-				xmlDocumentSummary = mainTagClose;
+				xmlDocumentParticipants = '333';		
+				xmlDocumentMain = 'mmmm333';
 			}
 			else {
 				alert('something went really wrong! How did you do that??');
 			}
-		}
+			xmlDocumentSummary=mainTagClose;
+		};
 		createEancom();
-		xmlDocument = xmlDocumentHeader+xmlDocumentMain+xmlDocumentSummary;
+		xmlDocument = xmlDocumentHeader+xmlDocumentParticipants+xmlDocumentMain+xmlDocumentSummary;
 		codeField.innerHTML = xmlDocument;
- 	}
-
- 	
+ 	};
 
 	
 	btnStart.addEventListener('click', getData);
