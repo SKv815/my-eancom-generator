@@ -159,22 +159,27 @@ window.onload = function() {
 		e0074Open = lb+'E0074'+rb,
 		e0074Close = clb+'E0074'+crb;
 
-	let eancomCode,
-		bgmCode,
-		messageFunctionCode,
-		xmlDocumentHeader,
-		xmlDocumentParticipants,
-		xmlDocumentMain,
-		xmlDocumentSummary,
-		xmlDocument;
+	let eancomCode = '',
+		bgmCode = '',
+		messageFunctionCode = '',
+		xmlDocumentHeader = '',
+		xmlDocumentMessageDetails = '';
+		xmlDocumentParticipants = '',
+		xmlDocumentGoods = '',
+		xmlDocumentSummary = '',
+		xmlDocument = '';
 
 	let radioButtons = document.getElementsByName('doctype'),
 		mainSection = document.getElementsByClassName('main-section')[0],
 		codeField = document.getElementById('code'),
 		btnStart = document.getElementById('start'),
-		btnCopy = document.getElementById('copy');
+		btnCopy = document.getElementById('copy'),
+		btnNext = document.getElementById('next'),
+		goodsSection = document.getElementsByClassName('goods-section')[0],
+		positions;
 
 
+// 1st step - definition of document type
 	function getDocType () {
 		if(radioButtons[0].checked){
 			docType = radioButtons[0].value;
@@ -214,76 +219,84 @@ window.onload = function() {
 	};
 
 
+// 2nd step - exdanding form - adding posotions
+// elements for positions section
+	let pos1 = '<div class="good"><div class="cont"><div class="col item-number"><h6 class=>Item ',
+		pos2 = '</h6></div></div><div class="cont"><div class="col good-header"><label>Item name</label><input type="text" class="good-name" maxlength="50"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="Pieces">Packages</option><option value="Packages">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
 
-
-
-// 0000000000000000000000000
-// price trimmer
-
-	let positions = document.getElementById('positions'),
-		positionLines,
-		test = document.getElementById('test');
-		test.addEventListener('click', function(){
-			let aaa = document.getElementById('pos1-pricenovat').value;
-			aaa = aaa.replace(/ /g,"");
-			aaa = aaa.replace(/,/g,".");
-			console.log(aaa);
-		});
-
-// 0000000000000000000000000
-
-
-
-
-
-
-
-
-// Form tuning
-	positions.addEventListener('change', function(){
-		positionLines = positions.value;
-		alert(positionLines);
+//building dom for positions
+	next.addEventListener('click', function(){
+		positions = document.getElementById('positions').value;
+		goodsSection.innerHTML = '';
+		let i;
+		for (i = 1; i <= positions; i++) {
+			goodsSection.innerHTML += pos1+i+pos2;
+		};
+		
 	});
 
 
+// get dynamic data from inputs
 	function getData(){
-// get dynamic data
 		let docNumber = document.getElementById('doc-number').value,
 			docDate = document.getElementById('date-doc').value,
 			deliveryDate = document.getElementById('date-delivery').value,
 			orderDate = document.getElementById('date-order').value,
 			orderNumber = document.getElementById('order-number').value,
-			distrGln = document.getElementById('gln-by'.value),
+			distrGln = document.getElementById('gln-by').value,
 			supplierGln = document.getElementById('gln-su').value,
 			deliveryPointGln = document.getElementById('gln-dt').value;
+
+		docDate = docDate.replace(/-/g,"");
+		orderDate = orderDate.replace(/-/g,"");
+		deliveryDate = deliveryDate.replace(/-/g,"");
+
+		let goodNames = document.getElementsByClassName('good-name'),
+			goodOrderUnits = document.getElementsByClassName('good-order-unit'),
+			goodGtins = document.getElementsByClassName('good-gtin'),
+			goodArts = document.getElementsByClassName('good-art'),
+			goodOrdered = document.getElementsByClassName('good-ordered'),
+			goodConfirmed = document.getElementsByClassName('good-confirmed'),
+			goodShipped = document.getElementsByClassName('good-shipped'),
+			goodPceInPa = document.getElementsByClassName('good-pceinpa'),
+			goodPriceClear = document.getElementsByClassName('good-pricenovat'),
+			goodPriceVat = document.getElementsByClassName('good-pricevat'),
+			goodVat = document.getElementsByClassName('good-vat');
+
 			
-			docDate = docDate.replace(/-/g,"");
-			orderDate = orderDate.replace(/-/g,"");
-			deliveryDate = deliveryDate.replace(/-/g,"");
+		
 
 // creating eancom document matching it's typed, by sections
 		function createEancom() {
 			xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'123'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+eancomCode+e0057Close+tab2+s009Close+tab+unhClose+tab+bgmOpen+br+tab2+c002Open+br+tab3+e1001Open+bgmCode+e1001Close+tab2+c002Close+tab2+c106Open+br+tab3+e1004Open+docNumber+e1004Close+tab2+c106Close+tab2+e1225Open+messageFunctionCode+e1225Close+tab+bgmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
 			if(docType=='ordrsp'){
-				xmlDocumentParticipants = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
-				xmlDocumentMain ='mmm1';
+				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
+				xmlDocumentParticipants = tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close
+				let i;
+				xmlDocumentGoods = '';
+				for (i = 0; i <= positions-1; i++) {
+					xmlDocumentGoods += sg26Open+goodNames[i].value+sg26Close;
+				};
 			}
 			else if(docType=='desadv'){
 				xmlDocumentParticipants = '222';		
-				xmlDocumentMain = 'mmmm222';
+				xmlDocumentGoods = 'mmmm222';
 			}
 			else if(docType=='recadv'){
 				xmlDocumentParticipants = '333';		
-				xmlDocumentMain = 'mmmm333';
+				xmlDocumentGoods = 'mmmm333';
 			}
 			else {
 				alert('something went really wrong! How did you do that??');
 			}
-			xmlDocumentSummary=mainTagClose;
+			xmlDocumentSummary = mainTagClose;
+
 		};
 		createEancom();
-		xmlDocument = xmlDocumentHeader+xmlDocumentParticipants+xmlDocumentMain+xmlDocumentSummary;
+		xmlDocument = xmlDocumentHeader+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
 		codeField.innerHTML = xmlDocument;
+		
+		
  	};
 
 	
@@ -303,3 +316,5 @@ window.onload = function() {
 	});
 
 }
+
+
