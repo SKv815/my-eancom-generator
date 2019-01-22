@@ -134,8 +134,8 @@ window.onload = function() {
 		sg36Close = clb+'SG36'+crb,
 		taxOpen = lb+'TAX'+rb,
 		taxClose = clb+'TAX'+crb,
-		e5286Open = lb+'E5286'+rb,
-		e5286Close = clb+'E5286'+crb,
+		e5283Open = lb+'E5283'+rb,
+		e5283Close = clb+'E5283'+crb,
 		c241Open = lb+'C241'+rb,
 		c241Close = clb+'C241'+crb,
 		e5153Open = lb+'E5153'+rb,
@@ -154,6 +154,8 @@ window.onload = function() {
 		c270Close = clb+'C270'+crb,
 		e6069Open = lb+'E6069'+rb,
 		e6069Close = clb+'E6069'+crb,
+		e6066Open = lb+'E6066'+rb,
+		e6066Close = clb+'E6066'+crb,
 		untOpen = lb+'UNT'+rb,
 		untClose = clb+'UNT'+crb,
 		e0074Open = lb+'E0074'+rb,
@@ -170,9 +172,9 @@ window.onload = function() {
 		xmlDocumentGoodsImd = '',
 		xmlDocumentGoodsQty = '',
 		xmlDocumentGoodsMoa = '',
-		xmlDocumentGoodsSg30 = '',
-		xmlDocumentGoodsSg36 = '',
+		xmlDocumentGoodsSg30Sg36 = '',
 		xmlDocumentGoods = '',
+		xmlDocumentMoa = '',
 		xmlDocumentSummary = '',
 		xmlDocument = '';
 
@@ -275,42 +277,70 @@ window.onload = function() {
 
 // creating eancom document matching it's typed, by sections
 		function createEancom() {
-			xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'123'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+eancomCode+e0057Close+tab2+s009Close+tab+unhClose+tab+bgmOpen+br+tab2+c002Open+br+tab3+e1001Open+bgmCode+e1001Close+tab2+c002Close+tab2+c106Open+br+tab3+e1004Open+docNumber+e1004Close+tab2+c106Close+tab2+e1225Open+messageFunctionCode+e1225Close+tab+bgmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
+			xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'123'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+eancomCode+e0057Close+tab2+s009Close+tab+unhClose+tab+bgmOpen+br+tab2+c002Open+br+tab3+e1001Open+bgmCode+e1001Close+tab2+c002Close+tab2+c106Open+br+tab3+e1004Open+docNumber+e1004Close+tab2+c106Close+tab2+e1225Open+messageFunctionCode+e1225Close+tab+bgmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'2'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
+			xmlDocumentSummary = tab+cntOpen+br+tab2+c270Open+br+tab3+e6069Open+'2'+e6069Close+tab3+e6066Open+positions+e6066Close+tab2+c270Close+tab+cntClose+tab+untOpen+br+tab2+e0074Open+e0074Close+tab2+e0062Open+'123'+e0062Close+tab+untClose+mainTagClose;
 			if(docType=='ordrsp'){
 				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
 				xmlDocumentParticipants = tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close;
-				let i;
+				let summClearArr = [],
+					summVatArr = [],
+					summClear = 0,
+					summVat = 0;
 				xmlDocumentGoods = '';
-				for (i = 0; i <= positions-1; i++) {
-					let lineValueClear = (Math.round((goodPriceClear[i].value*goodConfirmed[i].value)*100)/100),
-						lineValueVat = (Math.round((goodPriceVat[i].value*goodConfirmed[i].value)*100)/100);
-
+				// trimming inputs and getting sum of lines and the entire document
+				for (let i = 0; i <= positions-1; i++) {
+					let goodPriceClearTrim = goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".");
+					let goodPriceVatTrim = goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".");
+					let lineValueClear = Math.round((goodPriceClearTrim*goodConfirmed[i].value)*100)/100;
+					let lineValueVat = Math.round((goodPriceVatTrim*goodConfirmed[i].value)*100)/100;
+					summClearArr.push(lineValueClear);
+					summVatArr.push(lineValueVat);
+					summClear += summClearArr[i];
+					summVat += summVatArr[i];
+					
 					xmlDocumentGoodsLin = tab2+linOpen+br+tab3+e1082Open+(i+1)+e1082Close+tab3+e1229Open+'3'+e1229Close+tab3+c212Open+br+tab4+e7140Open+goodGtins[i].value+e7140Close+br+tab4+e7143Open+'srv'+e7143Close+tab3+c212Close+tab2+linClose;
 					xmlDocumentGoodsPia = tab2+piaOpen+br+tab3+e4347Open+'1'+e4347Close+br+tab3+c212Open+br+tab4+e7140Open+goodArts[i].value+e7140Close+tab4+e7143Open+'sa'+e7143Close+tab3+c212Close+tab2+piaClose;
 					xmlDocumentGoodsImd = tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+goodNames[i].value+e7008Close+tab3+c273Close+tab2+imdClose;
 					xmlDocumentGoodsQty = tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'21'+e6063Close+tab4+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose+tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'170'+e6063Close+tab4+e6060Open+(goodConfirmed[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose;
 					xmlDocumentGoodsMoa = tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose;
-					xmlDocumentGoodsSg30Sg36 = tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aaa'+e5125Close+tab5+e5118Open+goodPriceClear[i].value+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aae'+e5125Close+tab5+e5118Open+goodPriceVat[i].value+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg36Open+br+tab3+taxOpen+br+tab4+e5286Open+'7'+e5286Close+tab4+c241Open+br+tab5+e5153Open+'vat'+e5153Close+tab4+c241Close+tab4+c243Open+br+tab5+e5278Open+goodVat[i].value+e5278Close+tab4+c243Close+tab3+taxClose+tab2+sg36Close;
-					xmlDocumentGoods += tab+sg26Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsQty+xmlDocumentGoodsMoa+xmlDocumentGoodsSg30Sg36+tab+sg26Close;
-					// xmlDocumentGoods += tab+sg26Open+br+tab2+linOpen+br+tab3+e1082Open+(i+1)+e1082Close+tab3+e1229Open+'3'+e1229Close+tab3+c212Open+br+tab4+e7140Open+goodGtins[i].value+e7140Close+br+tab4+e7143Open+'srv'+e7143Close+tab3+c212Close+tab2+linClose+tab2+piaOpen+br+tab3+e4347Open+'1'+e4347Close+br+tab3+c212Open+br+tab4+e7140Open+goodArts[i].value+e7140Close+tab4+e7143Open+'sa'+e7143Close+tab3+c212Close+tab2+piaClose+tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+goodNames[i].value+e7008Close+tab3+c273Close+tab2+imdClose+tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'21'+e6063Close+tab4+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose+tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'170'+e6063Close+tab4+e6060Open+(goodConfirmed[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose+sg26Close;
+					xmlDocumentGoodsSg30Sg36 = tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aaa'+e5125Close+tab5+e5118Open+goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aae'+e5125Close+tab5+e5118Open+goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg36Open+br+tab3+taxOpen+br+tab4+e5283Open+'7'+e5283Close+tab4+c241Open+br+tab5+e5153Open+'vat'+e5153Close+tab4+c241Close+tab4+c243Open+br+tab5+e5278Open+goodVat[i].value+e5278Close+tab4+c243Close+tab3+taxClose+tab2+sg36Close;
+					xmlDocumentGoods += tab+sg26Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsQty+xmlDocumentGoodsMoa+xmlDocumentGoodsSg30Sg36+tab+sg26Close;	
 				};
+				xmlDocumentMoa = tab+unsOpen+br+tab2+e0081Open+'s'+e0081Close+tab+unsClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'79'+e5025Close+tab3+e5004Open+summClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+summVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+((Math.round((summVat-summClear)*100))/100)+e5004Close+tab2+c516Close+tab+moaClose;
+				xmlDocument = xmlDocumentHeader+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentMoa+xmlDocumentSummary;
 			}
 			else if(docType=='desadv'){
-				xmlDocumentParticipants = '222';		
-				xmlDocumentGoods = 'mmmm222';
+				let summClearArr = [],
+					summVatArr = [],
+					summClear = 0,
+					summVat = 0;
+				xmlDocumentGoods = '';
+				for (let i = 0; i <= positions-1; i++) {
+					let goodPriceClearTrim = goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".");
+					let goodPriceVatTrim = goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".");
+					let lineValueClear = Math.round((goodPriceClearTrim*goodConfirmed[i].value)*100)/100;
+					let lineValueVat = Math.round((goodPriceVatTrim*goodConfirmed[i].value)*100)/100;
+					summClearArr.push(lineValueClear);
+					summVatArr.push(lineValueVat);
+					summClear += summClearArr[i];
+					summVat += summVatArr[i];
+				};
+				xmlDocumentMoa = tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+summVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'125'+e5025Close+tab3+e5004Open+summClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+(summVat-summClear)+e5004Close+tab2+c516Close+tab+moaClose
+
+				// xmlDocumentParticipants = tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close;
+		    	// xmlDocumentGoodsMoa = tab+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose;
+				xmlDocument = 'not available yet';
 			}
 			else if(docType=='recadv'){
-				xmlDocumentParticipants = '333';		
-				xmlDocumentGoods = 'mmmm333';
+				xmlDocument = 'not available yet';
 			}
 			else {
-				alert('something went really wrong! How did you do that??');
+				xmlDocument = 'something went really wrong! How did you do that??';
 			}
-			xmlDocumentSummary = mainTagClose;
-
+			
 		};
 		createEancom();
-		xmlDocument = xmlDocumentHeader+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
+		
 		codeField.innerHTML = xmlDocument;
  	};
 
@@ -318,16 +348,16 @@ window.onload = function() {
 	btnStart.addEventListener('click', getData);
 
 	btnCopy.addEventListener('click', function () {
-	let codeCopy = document.getElementById('code'); 
-	let range = document.createRange();
-	range.selectNode(codeCopy); 
-	window.getSelection().addRange(range);
-	try { 
-		document.execCommand('copy'); 
-	} catch(err) { 
-		console.log('Can`t copy, boss'); 
-	}
-	window.getSelection().removeAllRanges();
+		let codeCopy = codeField; 
+		let range = document.createRange();
+		range.selectNode(codeCopy); 
+		window.getSelection().addRange(range);
+		try { 
+			document.execCommand('copy'); 
+		} catch(err) { 
+			console.log('Can`t copy, boss'); 
+		}
+		window.getSelection().removeAllRanges();
 	});
 
 }

@@ -75,6 +75,9 @@ main {
 	overflow-y: scroll;
 	background: #fff;
 }
+.left * {
+	color: #1A2942;
+}
 .left h5 {
 	font-size: 1.2rem;
 	margin: 0 auto 10px;
