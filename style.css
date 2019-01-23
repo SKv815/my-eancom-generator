@@ -129,9 +129,11 @@ label[for="recadv"]::before {
 	border-radius: 5px;
 	line-height: 150%;
 	cursor: pointer;
+	transition: all 0.2s ease;
 }
 .radio-item label:hover::before {
 	background-color: gray;
+	transition: all 0.2s ease;
 }
 .radio-item input:checked + label::before {
 	background-color: gray;
@@ -251,7 +253,7 @@ label[for="recadv"]::before {
 
 
 /* ##### media ##### */
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1000px) {
 	.col-2 {
 		flex-basis: 100%;
 	}
