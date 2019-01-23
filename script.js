@@ -165,11 +165,11 @@ window.onload = function() {
 		ftxOpen = lb+'FTX'+rb,
 		ftxClose = clb+'FTX'+crb,
 		e4451Open = lb+'E4451'+rb,
-		e4451Close = clb+'4451'+crb,
+		e4451Close = clb+'E4451'+crb,
 		c108Open = lb+'C108'+rb,
 		c108Close = clb+'C108'+crb,
 		e4440Open = lb+'E4440'+rb,
-		e4440Close = clb+'4440'+crb,
+		e4440Close = clb+'E4440'+crb,
 		sg6Open = lb+'SG6'+rb,
 		sg6Close = clb+'SG6'+crb,
 		tdtOpen = lb+'TDT'+rb,
@@ -204,6 +204,8 @@ window.onload = function() {
 		e6311Close = clb+'E6311'+crb,
 		c502Open = lb+'C502'+rb,
 		c502Close = clb+'C502'+crb,
+		c517Open = lb+'C517'+rb,
+		c517Close = clb+'C517'+crb,
 		e6313Open = lb+'E6313'+rb,
 		e6313Close = clb+'E6313'+crb,
 		c174Open = lb+'C174'+rb,
@@ -246,7 +248,6 @@ window.onload = function() {
 			eancomCode = 'EAN008';
 			bgmCode = '231';
 			messageFunctionCode = '4';
-			readyStatus = 1;
 		}
 		else if(radioButtons[1].checked){
 			docType = radioButtons[1].value;
@@ -255,7 +256,6 @@ window.onload = function() {
 			eancomCode = 'EAN007';
 			bgmCode = '351';
 			messageFunctionCode = '4';
-			readyStatus = 1;
 		}
 		else if(radioButtons[2].checked){
 			docType = radioButtons[2].value;
@@ -264,10 +264,12 @@ window.onload = function() {
 			eancomCode = 'EAN006';
 			bgmCode = '632';
 			messageFunctionCode = '9';
-			readyStatus = 1;
 		}
 		else {
-			alert('pls select document type');
+			alert('something went wrong');
+		}
+		if (readyStatus == 0) {
+			readyStatus = 1;
 		}
 	};
 	let i;
@@ -292,7 +294,6 @@ window.onload = function() {
 		for (let i = 1; i <= positions; i++) {
 			goodsSection.innerHTML += pos1+i+pos2;
 		};
-		
 	});
 
 
@@ -374,13 +375,13 @@ window.onload = function() {
 					
 					xmlDocumentGoodsLin = tab2+linOpen+br+tab3+e1082Open+(i+1)+e1082Close+tab3+e1229Open+'3'+e1229Close+tab3+c212Open+br+tab4+e7140Open+goodGtins[i].value+e7140Close+br+tab4+e7143Open+'srv'+e7143Close+tab3+c212Close+tab2+linClose;
 					xmlDocumentGoodsPia = tab2+piaOpen+br+tab3+e4347Open+'1'+e4347Close+br+tab3+c212Open+br+tab4+e7140Open+goodArts[i].value+e7140Close+tab4+e7143Open+'sa'+e7143Close+tab3+c212Close+tab2+piaClose;
-					xmlDocumentGoodsImd = tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+goodNames[i].value+e7008Close+tab3+c273Close+tab2+imdClose;
+					xmlDocumentGoodsImd = tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+'<p class="item-name">'+goodNames[i].value+'</p>'+e7008Close+tab3+c273Close+tab2+imdClose;
 					xmlDocumentGoodsQty = tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'21'+e6063Close+tab4+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose+tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'170'+e6063Close+tab4+e6060Open+(goodConfirmed[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose;
 					xmlDocumentGoodsMoa = tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose;
 					xmlDocumentGoodsSg30Sg36 = tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aaa'+e5125Close+tab5+e5118Open+goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aae'+e5125Close+tab5+e5118Open+goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg36Open+br+tab3+taxOpen+br+tab4+e5283Open+'7'+e5283Close+tab4+c241Open+br+tab5+e5153Open+'vat'+e5153Close+tab4+c241Close+tab4+c243Open+br+tab5+e5278Open+goodVat[i].value+e5278Close+tab4+c243Close+tab3+taxClose+tab2+sg36Close;
 					xmlDocumentGoods += tab+sg26Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsQty+xmlDocumentGoodsMoa+xmlDocumentGoodsSg30Sg36+tab+sg26Close;	
 				};
-				xmlDocumentMoa = tab+unsOpen+br+tab2+e0081Open+'s'+e0081Close+tab+unsClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'79'+e5025Close+tab3+e5004Open+sumClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+sumWithVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+sumVat+e5004Close+tab2+c516Close+tab+moaClose;
+				xmlDocumentMoa = tab+unsOpen+br+tab2+e0081Open+'s'+e0081Close+tab+unsClose+tab+moaOpen+br+tab3+c516Open+br+tab3+e5025Open+'79'+e5025Close+tab3+e5004Open+sumClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+sumWithVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+sumVat+e5004Close+tab2+c516Close+tab+moaClose;
 				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentMoa+xmlDocumentSummary;
 			}
 			else if(docType=='desadv'){
@@ -394,30 +395,27 @@ window.onload = function() {
 					sumClear += sumClearArr[i];
 					sumWithVat += sumWithVatArr[i];
 					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
+					xmlDocumentGoodsMoa = tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'203'+e5025Close+tab5+e5004Open+lineValueClear+e5004Close+tab4+c516Close+tab3+moaClose+tab2+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'79'+e5025Close+tab5+e5004Open+lineValueVat+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'124'+e5025Close+tab5+e5004Open+(lineValueVat-lineValueClear)+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'146'+e5025Close+tab5+e5004Open+goodPriceClear[i].value+e5004Close+tab4+c516Close+tab3+moaClose;
+
 				};
 				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'17'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
 				xmlDocumentMoaFtx = tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+sumWithVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'125'+e5025Close+tab3+e5004Open+sumClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+sumVat+e5004Close+tab2+c516Close+tab+moaClose+tab+ftxOpen+br+tab2+e4451Open+'ZZZ'+e4451Close+tab2+c108Open+br+tab3+e4440Open+e4440Close+tab2+c108Close+tab+ftxClose;
-				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab+c506Open+br+tab4+e1153Open+'AWC'+e1153Close+tab4+e1154Open+e1154Close+tab3+c506Close+tab2+rffClose+tab+sg1Close     +tab+sg1Open+br+tab2+rffOpen+br+tab+c506Open+br+tab4+e1153Open+'IV'+e1153Close+tab4+e1154Open+'01/00000001-19'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+deliveryDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
+				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'AWC'+e1153Close+tab4+e1154Open+e1154Close+tab3+c506Close+tab2+rffClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'IV'+e1153Close+tab4+e1154Open+'01/00000001-19'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+deliveryDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
 				xmlDocumentParticipants = tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg10Open+br+tab2+cpsOpen+br+tab3+e7164Open+'1'+e7164Close+tab2+cpsClose;
 
 				for (let i = 0; i <= positions-1; i++) {
 
 					xmlDocumentGoodsLin = tab3+linOpen+br+tab4+e1082Open+(i+1)+e1082Close+tab4+c212Open+br+tab5+e7140Open+goodGtins[i].value+e7140Close+tab5+e7143Open+'srv'+e7143Close+tab4+c212Close+tab3+linClose;
 					xmlDocumentGoodsPia = tab3+piaOpen+br+tab4+e4347Open+'1'+e4347Close+tab4+c212Open+br+tab5+e7140Open+goodArts[i].value+e7140Close+tab5+e7143Open+'sa'+e7143Close+tab4+c212Close+tab3+piaClose;
-					xmlDocumentGoodsImd = tab3+imdOpen+br+tab4+e7077Open+'f'+e7077Close+tab4+c273Open+br+tab5+e7008Open+goodNames[i].value+e7008Close+tab4+c273Close+tab3+imdClose;
+					xmlDocumentGoodsImd = tab3+imdOpen+br+tab4+e7077Open+'f'+e7077Close+tab4+c273Open+br+tab5+e7008Open+'<p class="item-name">'+goodNames[i].value+'</p>'+e7008Close+tab4+c273Close+tab3+imdClose;
 					xmlDocumentGoodsMea = tab3+meaOpen+br+tab4+e6311Open+'pd'+e6311Close+tab4+c502Open+br+tab5+e6313Open+'di'+e6313Close+tab4+c502Close+tab4+c174Open+br+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab5+e6314Open+e6314Close+tab4+c174Close+tab3+meaClose+tab3+meaOpen+br+tab4+e6311Open+'pd'+e6311Close+tab4+c502Open+br+tab5+e6313Open+'aaa'+e6313Close+tab4+c502Close+tab4+c174Open+br+tab5+e6411Open+e6411Close+tab5+e6314Open+e6314Close+tab4+c174Close+tab3+meaClose;					
 					xmlDocumentGoodsQty = tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'12'+e6063Close+tab5+e6060Open+(goodShipped[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose+tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'21'+e6063Close+tab5+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose;
 					xmlDocumentGoodsAliDtmFtx = tab3+aliOpen+br+tab4+e3239Open+'RU'+e3239Close+tab3+aliClose+tab3+dtmOpen+br+tab4+c507Open+br+tab5+e2005Open+'36'+e2005Close+tab5+e2380Open+e2380Close+tab5+e2379Open+'102'+e2379Close+tab4+c507Close+tab3+dtmClose+tab3+ftxOpen+br+tab4+e4451Open+'zzz'+e4451Close+tab4+c108Open+br+tab5+e4440Open+goodVat[i].value+e4440Close+tab4+c108Close+tab3+ftxClose;
-					xmlDocumentGoodsMoa;
-					xmlDocumentGoodsSg18Sg20;
-
-					xmlDocumentGoods += tab2+sg17Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsMea+xmlDocumentGoodsQty+xmlDocumentGoodsAliDtmFtx+xmlDocumentGoodsMoa+xmlDocumentGoodsSg18Sg20+tab2+sg17Close;	
+					xmlDocumentGoodsSg18Sg20 = tab3+sg18Open+sg18Close+tab3+sg20Open+br+tab4+locOpen+br+tab5+e3227Open+'7'+e3227Close+tab5+c517Open+br+tab5+tab+e3225Open+e3225Close+br+tab5+tab+e3055Open+'9'+e3055Close+tab5+c517Close+tab4+locClose+tab3+sg20Close ;
+					xmlDocumentGoods += tab2+sg17Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsMea+xmlDocumentGoodsQty+xmlDocumentGoodsAliDtmFtx+xmlDocumentGoodsMoa+xmlDocumentGoodsSg18Sg20+tab2+sg17Close+tab+sg10Close;	
 				};
 
-				// xmlDocumentParticipants = tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close;
-		    	// xmlDocumentGoodsMoa = tab+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose;
-				// xmlDocument = xmlDocumentHeader+xmlDocumentMoa+xmlDocumentSummary;
-				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+tab+sg10Close+xmlDocumentSummary;
+				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
 			}
 			else if(docType=='recadv'){
 				xmlDocument = 'not available yet';
@@ -439,7 +437,7 @@ window.onload = function() {
 			getData();
 		}
 		else {
-			alert('error?');
+			alert('something went wrong');
 		}
 	});
 		 
