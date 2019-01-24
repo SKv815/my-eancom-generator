@@ -386,16 +386,17 @@ window.onload = function() {
 			}
 			else if(docType=='desadv'){
 				for (let i = 0; i <= positions-1; i++) {
-					let goodPriceClearTrim = goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".");
-					let goodPriceVatTrim = goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".");
-					let lineValueClear = Math.round((goodPriceClearTrim*goodConfirmed[i].value)*100)/100;
-					let lineValueVat = Math.round((goodPriceVatTrim*goodConfirmed[i].value)*100)/100;
+					let goodPriceClearTrim = goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,"."),
+						goodPriceVatTrim = goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,"."),
+						lineValueClear = Math.round((goodPriceClearTrim*goodConfirmed[i].value)*100)/100,
+						lineValueVat = Math.round((goodPriceVatTrim*goodConfirmed[i].value)*100)/100,
+						lineTax = Math.round((lineValueVat-lineValueClear)*100)/100;
 					sumClearArr.push(lineValueClear);
 					sumWithVatArr.push(lineValueVat);
 					sumClear += sumClearArr[i];
 					sumWithVat += sumWithVatArr[i];
 					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
-					xmlDocumentGoodsMoa = tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'203'+e5025Close+tab5+e5004Open+lineValueClear+e5004Close+tab4+c516Close+tab3+moaClose+tab2+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'79'+e5025Close+tab5+e5004Open+lineValueVat+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'124'+e5025Close+tab5+e5004Open+(lineValueVat-lineValueClear)+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'146'+e5025Close+tab5+e5004Open+goodPriceClear[i].value+e5004Close+tab4+c516Close+tab3+moaClose;
+					xmlDocumentGoodsMoa = tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'203'+e5025Close+tab5+e5004Open+lineValueClear+e5004Close+tab4+c516Close+tab3+moaClose+tab2+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'79'+e5025Close+tab5+e5004Open+lineValueVat+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'124'+e5025Close+tab5+e5004Open+lineTax+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'146'+e5025Close+tab5+e5004Open+goodPriceClear[i].value+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'XB5'+e5025Close+tab5+e5004Open+goodPriceVat[i].value+e5004Close+tab4+c516Close+tab3+moaClose;
 
 				};
 				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'17'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
@@ -455,5 +456,5 @@ window.onload = function() {
 	});
 
 }
-
+// term test
 
