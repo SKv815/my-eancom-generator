@@ -443,9 +443,9 @@ window.onload = function() {
 	});
 		 
 	btnCopy.addEventListener('click', function () {
-		let codeCopy = codeField; 
+		// let codeCopy = codeField; 
 		let range = document.createRange();
-		range.selectNode(codeCopy);
+		range.selectNode(codeField);
 		window.getSelection().addRange(range);
 		try { 
 			document.execCommand('copy'); 
@@ -456,5 +456,5 @@ window.onload = function() {
 	});
 
 }
-// term test
+// term test 2
 
