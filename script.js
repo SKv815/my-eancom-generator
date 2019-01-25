@@ -369,9 +369,9 @@ window.onload = function() {
 						lineValueVat = Math.round((goodPriceVatTrim*goodConfirmed[i].value)*100)/100;
 					sumClearArr.push(lineValueClear);
 					sumWithVatArr.push(lineValueVat);
-					sumClear += sumClearArr[i];
-					sumWithVat += sumWithVatArr[i];
-					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
+					sumClear += (Math.round((sumClearArr[i])*100))/100;
+					sumWithVat += (Math.round((sumWithVatArr[i])*100))/100;
+					sumVat = sumWithVat-sumClear;
 					
 					xmlDocumentGoodsLin = tab2+linOpen+br+tab3+e1082Open+(i+1)+e1082Close+tab3+e1229Open+'3'+e1229Close+tab3+c212Open+br+tab4+e7140Open+goodGtins[i].value+e7140Close+br+tab4+e7143Open+'srv'+e7143Close+tab3+c212Close+tab2+linClose;
 					xmlDocumentGoodsPia = tab2+piaOpen+br+tab3+e4347Open+'1'+e4347Close+br+tab3+c212Open+br+tab4+e7140Open+goodArts[i].value+e7140Close+tab4+e7143Open+'sa'+e7143Close+tab3+c212Close+tab2+piaClose;
@@ -393,9 +393,9 @@ window.onload = function() {
 						lineTax = Math.round((lineValueVat-lineValueClear)*100)/100;
 					sumClearArr.push(lineValueClear);
 					sumWithVatArr.push(lineValueVat);
-					sumClear += sumClearArr[i];
-					sumWithVat += sumWithVatArr[i];
-					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
+					sumClear += (Math.round((sumClearArr[i])*100))/100;
+					sumWithVat += (Math.round((sumWithVatArr[i])*100))/100;
+					sumVat = sumWithVat-sumClear;
 					xmlDocumentGoodsMoa = tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'203'+e5025Close+tab5+e5004Open+lineValueClear+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'79'+e5025Close+tab5+e5004Open+lineValueVat+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'124'+e5025Close+tab5+e5004Open+lineTax+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'146'+e5025Close+tab5+e5004Open+goodPriceClear[i].value+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'XB5'+e5025Close+tab5+e5004Open+goodPriceVat[i].value+e5004Close+tab4+c516Close+tab3+moaClose;
 
 				};
