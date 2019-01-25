@@ -236,8 +236,21 @@ window.onload = function() {
 		btnCopy = document.getElementById('copy'),
 		btnNext = document.getElementById('next'),
 		goodsSection = document.getElementsByClassName('goods-section')[0],
-		positions;
+		positions,
+		distrGln = document.getElementById('gln-by'),
+		supplierGln = document.getElementById('gln-su'),
+		deliveryPointGln = document.getElementById('gln-dt');
 
+// Inputs trim
+	distrGln.addEventListener('input',function(){
+		this.value = this.value.replace(/[^-0-9]/g,'');
+	});
+	supplierGln.addEventListener('input',function(){
+		this.value = this.value.replace(/[^-0-9]/g,'');
+	});
+	deliveryPointGln.addEventListener('input',function(){
+		this.value = this.value.replace(/[^-0-9]/g,'');
+	});
 
 // 1st step - definition of document type
 	function getDocType () {
@@ -303,10 +316,10 @@ window.onload = function() {
 			docDate = document.getElementById('date-doc').value,
 			deliveryDate = document.getElementById('date-delivery').value,
 			orderDate = document.getElementById('date-order').value,
-			orderNumber = document.getElementById('order-number').value,
-			distrGln = document.getElementById('gln-by').value,
-			supplierGln = document.getElementById('gln-su').value,
-			deliveryPointGln = document.getElementById('gln-dt').value;
+			orderNumber = document.getElementById('order-number').value;
+		distrGln = document.getElementById('gln-by').value,
+		supplierGln = document.getElementById('gln-su').value,
+		deliveryPointGln = document.getElementById('gln-dt').value;
 
 		docDate = docDate.replace(/-/g,"");
 		orderDate = orderDate.replace(/-/g,"");
@@ -413,13 +426,13 @@ window.onload = function() {
 					xmlDocumentGoodsQty = tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'12'+e6063Close+tab5+e6060Open+(goodShipped[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose+tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'21'+e6063Close+tab5+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose;
 					xmlDocumentGoodsAliDtmFtx = tab3+aliOpen+br+tab4+e3239Open+'RU'+e3239Close+tab3+aliClose+tab3+dtmOpen+br+tab4+c507Open+br+tab5+e2005Open+'36'+e2005Close+tab5+e2380Open+e2380Close+tab5+e2379Open+'102'+e2379Close+tab4+c507Close+tab3+dtmClose+tab3+ftxOpen+br+tab4+e4451Open+'zzz'+e4451Close+tab4+c108Open+br+tab5+e4440Open+goodVat[i].value+e4440Close+tab4+c108Close+tab3+ftxClose;
 					xmlDocumentGoodsSg18Sg20 = tab3+sg18Open+sg18Close+tab3+sg20Open+br+tab4+locOpen+br+tab5+e3227Open+'7'+e3227Close+tab5+c517Open+br+tab5+tab+e3225Open+e3225Close+br+tab5+tab+e3055Open+'9'+e3055Close+tab5+c517Close+tab4+locClose+tab3+sg20Close ;
-					xmlDocumentGoods += tab2+sg17Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsMea+xmlDocumentGoodsQty+xmlDocumentGoodsAliDtmFtx+xmlDocumentGoodsMoa+xmlDocumentGoodsSg18Sg20+tab2+sg17Close+tab+sg10Close;	
+					xmlDocumentGoods += tab2+sg17Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsMea+xmlDocumentGoodsQty+xmlDocumentGoodsAliDtmFtx+xmlDocumentGoodsMoa+xmlDocumentGoodsSg18Sg20+tab2+sg17Close;	
 				};
 
-				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
+				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+tab+sg10Close+xmlDocumentSummary;
 			}
 			else if(docType=='recadv'){
-				xmlDocument = xmlDocumentHeader+xmlDocumentSummary;
+				xmlDocument = xmlDocumentHeader+'Sorry, recadv is not completely available yet'+br+xmlDocumentSummary;
 			}
 			else {
 				xmlDocument = 'something went really wrong! How did you do that??';
