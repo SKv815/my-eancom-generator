@@ -5,14 +5,14 @@
 	margin: 0;
 	font-family: Arial, sans-serif;
 	font-size: 0.9rem;
-	color: #222;
+	color: #1A2942;
 }
 .cont {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	align-items: flex-start;
+	align-items: stretch;
 	width: 100%;
 }
 .col {
@@ -46,17 +46,23 @@ body {
 
 /* ##### main screen layout ##### */
 header {
-	height: 5%;
+	height: 5vh;
 	padding: 1px 40px;
-	background: gray;
-	position: relative;
+	background: linear-gradient(#ccc, 80%,  #a1a1a1);
 }
-h1{
+header .cont {
+	height: 100%;
+}
+header div {
+	display: flex;
+	align-items: center;
+}
+header h1{
 	font-size: 1.2rem;
 }
 
 main {
-	height: 92%;
+	height: 92vh;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -70,14 +76,17 @@ main {
 	align-self: stretch;
 	position: relative;
 }
+.half-screen:first-child {
+	padding: 3px 1.5px 3px 3px;
+}
+.half-screen:last-child {
+	padding: 3px 3px 3px 1.5px;
+}
 .left {
 	flex: 1 1 50%;
 	padding: 15px 40px;
 	overflow-y: scroll;
 	background: #fff;
-}
-.left * {
-	color: #1A2942;
 }
 .left h5 {
 	font-size: 1.2rem;
@@ -100,7 +109,7 @@ footer {
 	position: fixed;
 	bottom: 0;
 	width: 100vw;
-	height: 3%;
+	height: 3vh;
 	padding: 1px 40px;
 	background: transparent;
 }
