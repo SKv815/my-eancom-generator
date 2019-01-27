@@ -12,9 +12,15 @@
 <body>
 	<header>
 		<div class="cont">
-			<div class="logo"><img src="" alt="logo"></div>
+			<div class="logo">
+				<img src="img/cat.png" alt="">
+			</div>
 			<div class="sign"><h1>Simple EANCOM generator</h1></div>
-			<div class="menu">settings</div>
+			<div class="menu">
+				<ul>
+					<li><a href="#" class="about">about</a></li>
+				</ul>
+			</div>
 		</div>
 	</header>
 	<main>
@@ -25,7 +31,9 @@
 					<h5>Document data</h5>
 				</div>
 				<div class="cont">
-					<div class="col-4">Doc type</div>
+					<div class="col-4">
+						<p>Doc type</p>
+					</div>
 					<div class="col-4">
 						<div class="radio-item">
 							<input id="ordrsp" type="radio" name="doctype" value="ordrsp">
@@ -55,17 +63,13 @@
 						<input type="date" id="date-doc">
 					</div>
 					<div class="col-2 input-item">
-						<label for="date-order">Order date</label>
-						<input type="date" id="date-order">
-					</div>
-					<div class="col-2 input-item">
-						<label for="date-delivery">Delivery date</label>
-						<input type="date" id="date-delivery">
-					</div>
-					<div class="col-2 input-item">
 						<label for="order-number">Order number</label>
 						<input type="text" id="order-number">
 					</div>	
+					<div class="col-2 input-item">
+						<label for="date-order">Order date</label>
+						<input type="date" id="date-order">
+					</div>
 					<div class="col-2 input-item">
 						<label for="gln-by">Distr GLN</label>
 						<input type="text" id="gln-by">
@@ -77,6 +81,10 @@
 					<div class="col-2 input-item">
 						<label for="gln-dt">Delivery point GLN</label>
 						<input type="text" id="gln-dt">
+					</div>
+					<div class="col-2 input-item">
+						<label for="date-delivery">Delivery date</label>
+						<input type="date" id="date-delivery">
 					</div>
 					<div class="col-2 input-item">
 						<label for="positions">Positions in document</label>
@@ -97,7 +105,7 @@
 						<button id="next">next</button>
 					</div>
 				</div>
-				<div class="goods-section">
+				<div class="goods-section hidden">
 				</div>
 			</div>
 		</div>
@@ -106,11 +114,22 @@
 			<div id="code" class="right">
 			</div>
 		</div>
+		<div class="overlay hidden"></div>
+		<div id="about-window" class="hidden">
+			<div class="about-header">
+				<h6>about</h6>
+				<div class="close">X</div>
+			</div>
+			<div class="about-body">
+				<p></p>
+				<p>Written by SKv815</p>
+				<p>2019</p>
+			</div>
+		</div>
 	</main>
 	<footer>
 		<div class="cont">
-			<div class="version">version: <span>0.0.3</span></div>
-			<div>2019</div>
+			<div>version: <span class="version">0.0.3</span></div>
 		</div>
 	</footer>
 </body>

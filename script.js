@@ -223,6 +223,9 @@ window.onload = function() {
 		e3239Open = lb+'E3239'+rb,
 		e3239Close = clb+'E3239'+crb;
 
+	let loader = document.createElement('div');
+	loader.classList.add('loader');
+
 	let eancomCode = '',
 		bgmCode = '',
 		messageFunctionCode = '',
@@ -298,16 +301,24 @@ window.onload = function() {
 // 2nd step - exdanding form - adding posotions
 // elements for positions section
 	let pos1 = '<div class="good"><div class="cont"><div class="col item-number"><h6 class=>Item ',
-		pos2 = '</h6></div></div><div class="cont"><div class="col good-header"><label>Item name</label><input type="text" class="good-name" maxlength="50"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
+		pos2 = '</h6></div></div><div class="cont"><div class="col good-header"><label>Item name</label><input type="text" class="good-name" maxlength="80"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
 
-//building dom for positions
-	next.addEventListener('click', function(){
+next.addEventListener('click', function(){
 		positions = document.getElementById('positions').value;
 		goodsSection.innerHTML = '';
-		for (let i = 1; i <= positions; i++) {
+		goodsSection.classList.remove('hidden');
+		goodsSection.classList.add('visible');
+		let i = 1;
+		let a = setInterval(extand, 70);
+		function extand() {
 			goodsSection.innerHTML += pos1+i+pos2;
-		};
+			i++;
+			if (i > positions) {
+				clearInterval(a);
+			}
+		}
 	});
+
 
 
 // get dynamic data from inputs
@@ -448,7 +459,9 @@ window.onload = function() {
 			codeField.innerHTML = 'Please select document type';
 		}
 		else if (readyStatus == 1) {
-			getData();
+			codeField.innerHTML = '';
+			codeField.appendChild(loader);
+			setTimeout(getData,300);
 		}
 		else {
 			alert('something went wrong');
@@ -468,5 +481,27 @@ window.onload = function() {
 		}
 		window.getSelection().removeAllRanges();
 	});
-
+// notifications
+	let overlay = document.getElementsByClassName('overlay')[0];
+	let aboutWindow = document.getElementById('about-window');
+	let close = document.getElementsByClassName('close')[0];
+	let about = document.getElementsByClassName('about')[0];
+	about.addEventListener('click', function(){
+		overlay.classList.remove('hidden');
+		overlay.classList.add('visible');
+		aboutWindow.classList.remove('hidden');
+		aboutWindow.classList.add('visible');
+	});
+	overlay.addEventListener('click', function(){
+		overlay.classList.add('hidden');
+		overlay.classList.remove('visible');
+		aboutWindow.classList.add('hidden');
+		aboutWindow.classList.remove('visible');
+	});
+	close.addEventListener('click', function(){
+		overlay.classList.add('hidden');
+		overlay.classList.remove('visible');
+		aboutWindow.classList.add('hidden');
+		aboutWindow.classList.remove('visible');
+	});
 }
