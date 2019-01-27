@@ -1,4 +1,7 @@
 window.onload = function() {
+// #####-Achtung-#####
+//  This is Govnokod
+// ###################
 
 // html construction elements:
 	let lb = '</div><div class="brackets">&lt;</div><div class="tagname">',
@@ -230,7 +233,8 @@ window.onload = function() {
 		bgmCode = '',
 		messageFunctionCode = '',
 		xmlDocument = '',
-		readyStatus = 0;
+		readyStatus = false;
+		readyStatus2 = false;
 
 	let radioButtons = document.getElementsByName('doctype'),
 		mainSection = document.getElementsByClassName('main-section')[0],
@@ -282,16 +286,16 @@ window.onload = function() {
 			messageFunctionCode = '9';
 		}
 		else {
-			alert('something went wrong');
+			error('something went wrong');
 		}
-		if (readyStatus == 0) {
-			readyStatus = 1;
+		if (readyStatus == false) {
+			readyStatus = true;
 		}
 	};
-	let i;
-	for (i = 0; i < radioButtons.length; i++) {
-		radioButtons[i].addEventListener('click', getDocType);
-		radioButtons[i].addEventListener('click', function(){
+	let r;
+	for (r = 0; r < radioButtons.length; r++) {
+		radioButtons[r].addEventListener('click', getDocType);
+		radioButtons[r].addEventListener('click', function(){
 			mainSection.classList.remove('hidden');
 			mainSection.classList.add('visible');
 		});
@@ -302,21 +306,29 @@ window.onload = function() {
 // elements for positions section
 	let pos1 = '<div class="good"><div class="cont"><div class="col item-number"><h6 class=>Item ',
 		pos2 = '</h6></div></div><div class="cont"><div class="col good-header"><label>Item name</label><input type="text" class="good-name" maxlength="80"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
-
-next.addEventListener('click', function(){
-		positions = document.getElementById('positions').value;
-		goodsSection.innerHTML = '';
-		goodsSection.classList.remove('hidden');
-		goodsSection.classList.add('visible');
-		let i = 1;
-		let a = setInterval(extand, 70);
-		function extand() {
-			goodsSection.innerHTML += pos1+i+pos2;
-			i++;
-			if (i > positions) {
-				clearInterval(a);
-			}
+	let extandActive = false;
+	next.addEventListener('click', function(){
+		if (extandActive == false) {
+			extandActive = true;
+			positions = document.getElementById('positions').value;
+			goodsSection.innerHTML = '';
+			goodsSection.classList.remove('hidden');
+			goodsSection.classList.add('visible');
+			let e = 1;
+			let a = setInterval(extand, 70);
+			function extand() {
+				goodsSection.innerHTML += pos1+e+pos2;
+				e++;
+				if (e > positions) {
+					clearInterval(a);
+					extandActive = false;
+				}
+			};
 		}
+		else {
+			console.log('do not double-click on this button, please');
+		}
+		readyStatus2 = true;
 	});
 
 
@@ -446,7 +458,7 @@ next.addEventListener('click', function(){
 				xmlDocument = xmlDocumentHeader+'Sorry, recadv is not completely available yet'+br+xmlDocumentSummary;
 			}
 			else {
-				xmlDocument = 'something went really wrong! How did you do that??';
+				error('some sort of error...');
 			}
 			
 		};
@@ -455,10 +467,13 @@ next.addEventListener('click', function(){
  	};
 	
 	btnStart.addEventListener('click', function startChech() {
-		if (readyStatus == 0) {
+		if (readyStatus == false) {
 			codeField.innerHTML = 'Please select document type';
 		}
-		else if (readyStatus == 1) {
+		else if (readyStatus == true && readyStatus2 == false) {
+			codeField.innerHTML = 'Complete the form (next)';
+		}
+		else if (readyStatus == true && readyStatus2 == true) {
 			codeField.innerHTML = '';
 			codeField.appendChild(loader);
 			setTimeout(getData,300);
@@ -467,9 +482,8 @@ next.addEventListener('click', function(){
 			alert('something went wrong');
 		}
 	});
-		 
+	
 	btnCopy.addEventListener('click', function () {
-		// let codeCopy = codeField; 
 		let range = document.createRange();
 		range.selectNode(codeField);
 		window.getSelection().addRange(range);
@@ -485,7 +499,10 @@ next.addEventListener('click', function(){
 	let overlay = document.getElementsByClassName('overlay')[0];
 	let aboutWindow = document.getElementById('about-window');
 	let close = document.getElementsByClassName('close')[0];
+	let closeAlert = document.getElementsByClassName('close')[1];
 	let about = document.getElementsByClassName('about')[0];
+	let alertWindow = document.getElementsByClassName('notification')[0];
+	let alertMessage = document.getElementsByClassName('notification-body')[0];
 	about.addEventListener('click', function(){
 		overlay.classList.remove('hidden');
 		overlay.classList.add('visible');
@@ -497,11 +514,36 @@ next.addEventListener('click', function(){
 		overlay.classList.remove('visible');
 		aboutWindow.classList.add('hidden');
 		aboutWindow.classList.remove('visible');
+		alertWindow.classList.add('hidden');
+		alertWindow.classList.remove('visible');
 	});
 	close.addEventListener('click', function(){
 		overlay.classList.add('hidden');
 		overlay.classList.remove('visible');
 		aboutWindow.classList.add('hidden');
 		aboutWindow.classList.remove('visible');
+	});
+
+	function error(message) {
+		let op = 99;
+		alertMessage.innerHTML = message;
+		overlay.classList.remove('hidden');
+		overlay.classList.add('visible');
+		alertWindow.classList.remove('hidden');
+		alertWindow.classList.add('visible');
+
+		setTimeout(function(){
+			overlay.classList.add('hidden');
+			overlay.classList.remove('visible');
+			alertWindow.classList.add('hidden');
+			alertWindow.classList.remove('visible');
+		}, 3000);
+	};
+
+	closeAlert.addEventListener('click', function(){
+		overlay.classList.add('hidden');
+		overlay.classList.remove('visible');
+		alertWindow.classList.add('hidden');
+		alertWindow.classList.remove('visible');
 	});
 }

@@ -392,6 +392,42 @@ label[for="recadv"]::before {
 .about-body p {
 	margin-bottom: 10px;
 }
+.notification {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -180px;
+	margin-left: -200px;
+	min-height: 120px;
+	width: 400px;
+	background-color: white;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	z-index: 1000;
+}
+.notification-header {
+	position: relative;
+	top: -1px;
+	left: -1px;
+	height: 18px;
+	width: 400px;
+	background: linear-gradient(red, 80%,  darkred);
+	border-radius: 5px 5px 0 0;
+	text-align: center;
+	text-transform: capitalize;
+}
+.notification-header h6 {
+	line-height: 18px;
+}
+.notification-header .close{
+	position: absolute;
+	top: 2px;
+	right: 10px;
+	cursor: pointer;
+}
+.notification-body {
+	padding: 10px;
+}
 .loader {
 	position: absolute;
 	color: red;
