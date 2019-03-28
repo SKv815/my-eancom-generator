@@ -299,6 +299,7 @@ window.onload = function() {
 			mainSection.classList.remove('hidden');
 			mainSection.classList.add('visible');
 		});
+		radioButtons[r].addEventListener('click', docNumberRefresh);
 	};
 
 
@@ -389,12 +390,12 @@ window.onload = function() {
 				sumWithVat = 0,
 				sumVat = 0;
 
-			xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'123'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+eancomCode+e0057Close+tab2+s009Close+tab+unhClose+tab+bgmOpen+br+tab2+c002Open+br+tab3+e1001Open+bgmCode+e1001Close+tab2+c002Close+tab2+c106Open+br+tab3+e1004Open+docNumber+e1004Close+tab2+c106Close+tab2+e1225Open+messageFunctionCode+e1225Close+tab+bgmClose;
+			xmlDocumentHeader = mainTagOpen+br+tab+unhOpen+br+tab2+e0062Open+'123'+e0062Close+tab2+s009Open+br+tab3+e0065Open+docType+e0065Close+tab3+e0052Open+'D'+e0052Close+tab3+e0054Open+'01B'+e0054Close+tab3+e0051Open+'UN'+e0051Close+tab3+e0057Open+eancomCode+e0057Close+tab2+s009Close+tab+unhClose+tab+bgmOpen+br+tab2+c002Open+br+tab3+e1001Open+bgmCode+e1001Close+tab2+c002Close+tab2+c106Open+br+tab3+e1004Open+'<p class="no-transform">'+docNumber+'</p>'+e1004Close+tab2+c106Close+tab2+e1225Open+messageFunctionCode+e1225Close+tab+bgmClose;
 			xmlDocumentSummary = tab+cntOpen+br+tab2+c270Open+br+tab3+e6069Open+'2'+e6069Close+tab3+e6066Open+positions+e6066Close+tab2+c270Close+tab+cntClose+tab+untOpen+br+tab2+e0074Open+e0074Close+tab2+e0062Open+'123'+e0062Close+tab+untClose+mainTagClose;
 			
 			if(docType=='ordrsp'){
 				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'2'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
-				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
+				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+'<p class="no-transform">'+orderNumber+'</p>'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
 				xmlDocumentParticipants = tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close+tab+sg3Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg3Close;
 
 				// trimming inputs and getting sum of lines and the entire document
@@ -407,11 +408,11 @@ window.onload = function() {
 					sumWithVatArr.push(lineValueVat);
 					sumClear += (Math.round((sumClearArr[i])*100))/100;
 					sumWithVat += (Math.round((sumWithVatArr[i])*100))/100;
-					sumVat = sumWithVat-sumClear;
+					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
 					
 					xmlDocumentGoodsLin = tab2+linOpen+br+tab3+e1082Open+(i+1)+e1082Close+tab3+e1229Open+'3'+e1229Close+tab3+c212Open+br+tab4+e7140Open+goodGtins[i].value+e7140Close+br+tab4+e7143Open+'srv'+e7143Close+tab3+c212Close+tab2+linClose;
 					xmlDocumentGoodsPia = tab2+piaOpen+br+tab3+e4347Open+'1'+e4347Close+br+tab3+c212Open+br+tab4+e7140Open+goodArts[i].value+e7140Close+tab4+e7143Open+'sa'+e7143Close+tab3+c212Close+tab2+piaClose;
-					xmlDocumentGoodsImd = tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+'<p class="item-name">'+goodNames[i].value+'</p>'+e7008Close+tab3+c273Close+tab2+imdClose;
+					xmlDocumentGoodsImd = tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+'<p class="no-transform">'+goodNames[i].value+'</p>'+e7008Close+tab3+c273Close+tab2+imdClose;
 					xmlDocumentGoodsQty = tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'21'+e6063Close+tab4+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose+tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'170'+e6063Close+tab4+e6060Open+(goodConfirmed[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose;
 					xmlDocumentGoodsMoa = tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose;
 					xmlDocumentGoodsSg30Sg36 = tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aaa'+e5125Close+tab5+e5118Open+goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aae'+e5125Close+tab5+e5118Open+goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg36Open+br+tab3+taxOpen+br+tab4+e5283Open+'7'+e5283Close+tab4+c241Open+br+tab5+e5153Open+'vat'+e5153Close+tab4+c241Close+tab4+c243Open+br+tab5+e5278Open+goodVat[i].value+e5278Close+tab4+c243Close+tab3+taxClose+tab2+sg36Close;
@@ -431,20 +432,20 @@ window.onload = function() {
 					sumWithVatArr.push(lineValueVat);
 					sumClear += (Math.round((sumClearArr[i])*100))/100;
 					sumWithVat += (Math.round((sumWithVatArr[i])*100))/100;
-					sumVat = sumWithVat-sumClear;
-					xmlDocumentGoodsMoa = tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'203'+e5025Close+tab5+e5004Open+lineValueClear+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'79'+e5025Close+tab5+e5004Open+lineValueVat+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'124'+e5025Close+tab5+e5004Open+lineTax+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'146'+e5025Close+tab5+e5004Open+goodPriceClear[i].value+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'XB5'+e5025Close+tab5+e5004Open+goodPriceVat[i].value+e5004Close+tab4+c516Close+tab3+moaClose;
+					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
+					xmlDocumentGoodsMoa = tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'203'+e5025Close+tab5+e5004Open+lineValueClear+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'79'+e5025Close+tab5+e5004Open+lineValueVat+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'124'+e5025Close+tab5+e5004Open+lineTax+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'146'+e5025Close+tab5+e5004Open+goodPriceClearTrim+e5004Close+tab4+c516Close+tab3+moaClose+tab3+moaOpen+br+tab4+c516Open+br+tab5+e5025Open+'XB5'+e5025Close+tab5+e5004Open+goodPriceVatTrim+e5004Close+tab4+c516Close+tab3+moaClose;
 
 				};
 				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'17'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
 				xmlDocumentMoaFtx = tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+sumWithVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'125'+e5025Close+tab3+e5004Open+sumClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+sumVat+e5004Close+tab2+c516Close+tab+moaClose+tab+ftxOpen+br+tab2+e4451Open+'ZZZ'+e4451Close+tab2+c108Open+br+tab3+e4440Open+e4440Close+tab2+c108Close+tab+ftxClose;
-				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+orderNumber+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'AWC'+e1153Close+tab4+e1154Open+e1154Close+tab3+c506Close+tab2+rffClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'IV'+e1153Close+tab4+e1154Open+'01/00000001-19'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+deliveryDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
+				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+'<p class="no-transform">'+orderNumber+'</p>'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'AWC'+e1153Close+tab4+e1154Open+e1154Close+tab3+c506Close+tab2+rffClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'IV'+e1153Close+tab4+e1154Open+'01/00000001-19'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+deliveryDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
 				xmlDocumentParticipants = tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg10Open+br+tab2+cpsOpen+br+tab3+e7164Open+'1'+e7164Close+tab2+cpsClose;
 
 				for (let i = 0; i <= positions-1; i++) {
 
 					xmlDocumentGoodsLin = tab3+linOpen+br+tab4+e1082Open+(i+1)+e1082Close+tab4+c212Open+br+tab5+e7140Open+goodGtins[i].value+e7140Close+tab5+e7143Open+'srv'+e7143Close+tab4+c212Close+tab3+linClose;
 					xmlDocumentGoodsPia = tab3+piaOpen+br+tab4+e4347Open+'1'+e4347Close+tab4+c212Open+br+tab5+e7140Open+goodArts[i].value+e7140Close+tab5+e7143Open+'sa'+e7143Close+tab4+c212Close+tab3+piaClose;
-					xmlDocumentGoodsImd = tab3+imdOpen+br+tab4+e7077Open+'f'+e7077Close+tab4+c273Open+br+tab5+e7008Open+'<p class="item-name">'+goodNames[i].value+'</p>'+e7008Close+tab4+c273Close+tab3+imdClose;
+					xmlDocumentGoodsImd = tab3+imdOpen+br+tab4+e7077Open+'f'+e7077Close+tab4+c273Open+br+tab5+e7008Open+'<p class="no-transform">'+goodNames[i].value+'</p>'+e7008Close+tab4+c273Close+tab3+imdClose;
 					xmlDocumentGoodsMea = tab3+meaOpen+br+tab4+e6311Open+'pd'+e6311Close+tab4+c502Open+br+tab5+e6313Open+'di'+e6313Close+tab4+c502Close+tab4+c174Open+br+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab5+e6314Open+e6314Close+tab4+c174Close+tab3+meaClose+tab3+meaOpen+br+tab4+e6311Open+'pd'+e6311Close+tab4+c502Open+br+tab5+e6313Open+'aaa'+e6313Close+tab4+c502Close+tab4+c174Open+br+tab5+e6411Open+e6411Close+tab5+e6314Open+e6314Close+tab4+c174Close+tab3+meaClose;					
 					xmlDocumentGoodsQty = tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'12'+e6063Close+tab5+e6060Open+(goodShipped[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose+tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'21'+e6063Close+tab5+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose;
 					xmlDocumentGoodsAliDtmFtx = tab3+aliOpen+br+tab4+e3239Open+'RU'+e3239Close+tab3+aliClose+tab3+dtmOpen+br+tab4+c507Open+br+tab5+e2005Open+'36'+e2005Close+tab5+e2380Open+e2380Close+tab5+e2379Open+'102'+e2379Close+tab4+c507Close+tab3+dtmClose+tab3+ftxOpen+br+tab4+e4451Open+'zzz'+e4451Close+tab4+c108Open+br+tab5+e4440Open+goodVat[i].value+e4440Close+tab4+c108Close+tab3+ftxClose;
@@ -546,4 +547,19 @@ window.onload = function() {
 		alertWindow.classList.add('hidden');
 		alertWindow.classList.remove('visible');
 	});
+
+// "product" version
+	let version = document.getElementsByClassName('version')[0];
+		version.innerHTML = '0.0.9';
+
+// auto filling doc number
+	let orderNumberAf = document.getElementById('order-number'),
+		docNumberAf = document.getElementById('doc-number');
+	orderNumberAf.addEventListener('input', docNumberRefresh);
+
+		function docNumberRefresh() {
+		let docNumber = document.getElementById('doc-number').value,
+			orderNumber = document.getElementById('order-number').value;
+		docNumberAf.value = docType+'-'+orderNumber;
+	}
 }
