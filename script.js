@@ -490,7 +490,7 @@ window.onload = function() {
 				xmlDocument = xmlDocumentHeader+'Sorry, recadv is not completely available yet'+br+xmlDocumentSummary;
 			}
 			else {
-				error('some sort of error...');
+				error('Error in doctype...');
 			}
 			
 		};
@@ -498,7 +498,7 @@ window.onload = function() {
 		codeField.innerHTML = xmlDocument;
  	};
 	
-	btnStart.addEventListener('click', function startChech() {
+	btnStart.addEventListener('click', function startCheck() {
 		if (readyStatus == false) {
 			codeField.innerHTML = 'Please select document type';
 		}
@@ -511,7 +511,7 @@ window.onload = function() {
 			setTimeout(getData,300);
 		}
 		else {
-			alert('something went wrong');
+			error('Error in ready status...');
 		}
 	});
 	
