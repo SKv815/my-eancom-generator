@@ -3,7 +3,7 @@ window.onload = function() {
 //  This is Govnokod
 // ###################
 
-// html construction elements:
+//  tag construction elements:
 	let lb = '</div><div class="brackets">&lt;</div><div class="tagname">',
 		rb = '</div><div class="brackets">&gt;</div>',
 		br = '<p>&#13;</p>',
@@ -13,10 +13,9 @@ window.onload = function() {
 		tab2 = tab+tab,
 		tab3 = tab2+tab,
 		tab4 = tab3+tab,
-		tab5 = tab4+tab
-		;
+		tab5 = tab4+tab;
 
-// eancom construction elements
+//  eancom construction elements
 	let mainTagOpen,
 		mainTagClose,
 		unhOpen = lb+'uhn'+rb,
@@ -274,7 +273,10 @@ window.onload = function() {
 		supplierGln = document.getElementById('gln-su'),
 		deliveryPointGln = document.getElementById('gln-dt');
 
-// Inputs trim
+// Header inputs trim
+	function integersOnly (){
+		this.value = this.value.replace(/[^-0-9]/g,'');
+	}
 	distrGln.addEventListener('input',function(){
 		this.value = this.value.replace(/[^-0-9]/g,'');
 	});
@@ -284,6 +286,7 @@ window.onload = function() {
 	deliveryPointGln.addEventListener('input',function(){
 		this.value = this.value.replace(/[^-0-9]/g,'');
 	});
+
 
 // 1st step - definition of document type
 	function getDocType () {
@@ -331,8 +334,8 @@ window.onload = function() {
 
 // 2nd step - exdanding form - adding posotions
 // elements for positions section
-	let pos1 = '<div class="good"><div class="cont"><div class="col item-number"><h6 class=>Item ',
-		pos2 = '</h6></div></div><div class="cont"><div class="col good-header"><label>Item name</label><input type="text" class="good-name" maxlength="80"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
+	let pos1 = '<div class="good"><div class="cont"><div class="col-1 item-number"><h6 class=>Item ',
+		pos2 = '</h6></div></div><div class="cont"><div class="col-1 good-header"><label>Item name</label><input type="text" class="good-name" maxlength="180"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>Tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
 	let extandActive = false;
 	next.addEventListener('click', function(){
 		if (extandActive == false) {
@@ -357,8 +360,6 @@ window.onload = function() {
 		}
 		readyStatus2 = true;
 	});
-
-
 
 // get dynamic data from inputs
 	function getData(){
@@ -390,9 +391,12 @@ window.onload = function() {
 			goodPriceVat = document.getElementsByClassName('good-pricevat'),
 			goodVat = document.getElementsByClassName('tax');
 
-			
+// Inputs trim 2
+	for (var i = 0; i <= goodOrdered.length - 1; i++) {
+		goodOrdered[i].addEventListener('input',function(){
+		this.value = this.value.replace(/[^-0-9]/g,'');})
+	};	
 		
-
 // creating eancom document matching it's typed, by sections
 		function createEancom() {
 			let	xmlDocumentHeader = '',
@@ -445,7 +449,7 @@ window.onload = function() {
 					xmlDocumentGoodsPia = tab2+piaOpen+br+tab3+e4347Open+'1'+e4347Close+br+tab3+c212Open+br+tab4+e7140Open+goodArts[i].value+e7140Close+tab4+e7143Open+'sa'+e7143Close+tab3+c212Close+tab2+piaClose;
 					xmlDocumentGoodsImd = tab2+imdOpen+br+tab3+e7077Open+'f'+e7077Close+tab3+c273Open+br+tab4+e7008Open+'<p class="no-transform">'+goodNames[i].value+'</p>'+e7008Close+tab3+c273Close+tab2+imdClose;
 					xmlDocumentGoodsQty = tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'21'+e6063Close+tab4+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose+tab2+qtyOpen+br+tab3+c186Open+br+tab4+e6063Open+'170'+e6063Close+tab4+e6060Open+(goodConfirmed[i].value+'.000')+e6060Close+tab4+e6411Open+goodOrderUnits[i].value+e6411Close+tab3+c186Close+tab2+qtyClose;
-					xmlDocumentGoodsMoa = tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose;
+					xmlDocumentGoodsMoa = tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'203'+e5025Close+tab4+e5004Open+lineValueClear+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'128'+e5025Close+tab4+e5004Open+lineValueVat+e5004Close+tab3+c516Close+tab2+moaClose+tab2+moaOpen+br+tab3+c516Open+br+tab4+e5025Open+'124'+e5025Close+tab4+e5004Open+(lineValueVat-lineValueClear)+e5004Close+tab3+c516Close+tab2+moaClose;
 					xmlDocumentGoodsSg30Sg36 = tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aaa'+e5125Close+tab5+e5118Open+goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg30Open+br+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'aae'+e5125Close+tab5+e5118Open+goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".")+e5118Close+tab4+c509Close+tab3+priClose+tab2+sg30Close+tab2+sg36Open+br+tab3+taxOpen+br+tab4+e5283Open+'7'+e5283Close+tab4+c241Open+br+tab5+e5153Open+'vat'+e5153Close+tab4+c241Close+tab4+c243Open+br+tab5+e5278Open+goodVat[i].value+e5278Close+tab4+c243Close+tab3+taxClose+tab2+sg36Close;
 					xmlDocumentGoods += tab+sg26Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsQty+xmlDocumentGoodsMoa+xmlDocumentGoodsSg30Sg36+tab+sg26Close;	
 				};
@@ -486,7 +490,7 @@ window.onload = function() {
 				xmlDocument = xmlDocumentHeader+'Sorry, recadv is not completely available yet'+br+xmlDocumentSummary;
 			}
 			else {
-				error('some sort of error...');
+				error('Error in doctype...');
 			}
 			
 		};
@@ -494,7 +498,7 @@ window.onload = function() {
 		codeField.innerHTML = xmlDocument;
  	};
 	
-	btnStart.addEventListener('click', function startChech() {
+	btnStart.addEventListener('click', function startCheck() {
 		if (readyStatus == false) {
 			codeField.innerHTML = 'Please select document type';
 		}
@@ -507,7 +511,7 @@ window.onload = function() {
 			setTimeout(getData,300);
 		}
 		else {
-			alert('something went wrong');
+			error('Error in ready status...');
 		}
 	});
 	
