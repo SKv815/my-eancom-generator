@@ -271,7 +271,8 @@ window.onload = function() {
 		positions,
 		distrGln = document.getElementById('gln-by'),
 		supplierGln = document.getElementById('gln-su'),
-		deliveryPointGln = document.getElementById('gln-dt');
+		deliveryPointGln = document.getElementById('gln-dt'),
+		forRecadv = document.getElementsByClassName('for-recadv')[0];
 
 // Header inputs trim
 	function integersOnly (){
@@ -310,7 +311,7 @@ window.onload = function() {
 			docType = radioButtons[2].value;
 			mainTagOpen = lb+docType+rb;
 			mainTagClose = clb+docType+crb;
-			eancomCode = 'EAN006';
+			eancomCode = 'EAN010';
 			bgmCode = '632';
 			messageFunctionCode = '9';
 		}
@@ -327,6 +328,14 @@ window.onload = function() {
 		radioButtons[r].addEventListener('click', function(){
 			mainSection.classList.remove('hidden');
 			mainSection.classList.add('visible');
+			if (docType == 'recadv') {
+				forRecadv.style.height='32px';
+				forRecadv.classList.remove('hidden');
+				forRecadv.classList.add('visible');
+			}
+			else {
+				forRecadv.style.height='0';
+			}
 		});
 		radioButtons[r].addEventListener('click', docNumberRefresh);
 	};
@@ -336,22 +345,22 @@ window.onload = function() {
 // elements for positions section
 	let pos1 = '<div class="good"><div class="cont"><div class="col-1 item-number"><h6 class=>Item ',
 		pos2 = '</h6></div></div><div class="cont"><div class="col-1 good-header"><label>Item name</label><input type="text" class="good-name" maxlength="180"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>Tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
-	let extandActive = false;
+	let expandActive = false;
 	next.addEventListener('click', function(){
-		if (extandActive == false) {
-			extandActive = true;
+		if (expandActive == false) {
+			expandActive = true;
 			positions = document.getElementById('positions').value;
 			goodsSection.innerHTML = '';
 			goodsSection.classList.remove('hidden');
 			goodsSection.classList.add('visible');
 			let e = 1;
-			let a = setInterval(extand, 70);
-			function extand() {
+			let a = setInterval(expand, 70);
+			function expand() {
 				goodsSection.innerHTML += pos1+e+pos2;
 				e++;
 				if (e > positions) {
 					clearInterval(a);
-					extandActive = false;
+					expandActive = false;
 				}
 			};
 		}
@@ -367,6 +376,7 @@ window.onload = function() {
 			docVer = document.getElementById('doc-ver').value,
 			docDate = document.getElementById('date-doc').value,
 			deliveryDate = document.getElementById('date-delivery').value,
+			receivingDate = document.getElementById('date-receiving').value,
 			orderNumber = document.getElementById('order-number').value,
 			orderVer = document.getElementById('order-ver').value,
 			orderDate = document.getElementById('date-order').value,
@@ -487,7 +497,8 @@ window.onload = function() {
 				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+tab+sg10Close+xmlDocumentSummary;
 			}
 			else if(docType=='recadv'){
-				xmlDocument = xmlDocumentHeader+'Sorry, recadv is not completely available yet'+br+xmlDocumentSummary;
+				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'35'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
+				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
 			}
 			else {
 				error('Error in doctype...');
