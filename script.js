@@ -527,8 +527,10 @@ window.onload = function() {
 	});
 	
 	btnCopy.addEventListener('click', function () {
+		let result = document.getElementById('code');
 		let range = document.createRange();
-		range.selectNode(codeField);
+		range.selectNode(result);
+		window.getSelection().removeAllRanges();
 		window.getSelection().addRange(range);
 		try { 
 			document.execCommand('copy'); 
