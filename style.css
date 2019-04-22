@@ -26,6 +26,7 @@ a {
 }
 .col-1 {
 	flex-basis: 100%;
+	z-index: 10;
 }
 .col-2 {
 	flex-basis: 50%;
@@ -289,7 +290,7 @@ select option {
 	border: 1px solid #333;
 	border-radius: 8px;
 	box-shadow: 1px 1px 1px #333;
-	z-index: 10;
+	z-index: 20;
 }
 .btn:active {
 	box-shadow: -1px -1px 1px #333;
@@ -375,7 +376,7 @@ select option {
 .about-header h6 {
 	line-height: 18px;
 }
-.about-header .close {
+.close {
 	position: absolute;
 	top: 2px;
 	right: 10px;
@@ -385,33 +386,26 @@ select option {
 	cursor: pointer;
 	transition: all 0.2s ease;
 }
-.about-header .close:hover {
-	position: absolute;
-	top: 2px;
-	right: 10px;
-	height: 14px;
-	width: 14px;
-	background-color: #b1b1b1;
-	border-radius: 3px;
-	cursor: pointer;
+.close:hover {
+	background-color: rgba(0, 0, 0, 0.15);
 	transition: all 0.2s ease;
 }
-.about-header .close::before {
+.close::before {
 	content: "";
 	display: block;
 	position: absolute;
-	top: 0px;
+	top: 1px;
 	left: 6px;
 	height: 13px;
 	width: 1px;
 	background-color: #1A2942;
 	transform: rotate(45deg);
 }
-.about-header .close::after {
+.close::after {
 	content: "";
 	display: block;
 	position: absolute;
-	top: 0px;
+	top: 1px;
 	left: 6px;
 	height: 13px;
 	width: 1px;
@@ -451,12 +445,6 @@ select option {
 }
 .notification-header h6 {
 	line-height: 18px;
-}
-.notification-header .close{
-	position: absolute;
-	top: 2px;
-	right: 10px;
-	cursor: pointer;
 }
 .notification-body {
 	padding: 10px;

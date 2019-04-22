@@ -258,7 +258,8 @@ window.onload = function() {
 		bgmCode = '',
 		messageFunctionCode = '',
 		xmlDocument = '',
-		readyStatus = false;
+		displayCode,
+		readyStatus = false,
 		readyStatus2 = false;
 
 	let radioButtons = document.getElementsByName('doctype'),
@@ -320,6 +321,7 @@ window.onload = function() {
 		}
 		if (readyStatus == false) {
 			readyStatus = true;
+			displayCode = 1;
 		}
 	};
 	let r;
@@ -328,20 +330,73 @@ window.onload = function() {
 		radioButtons[r].addEventListener('click', function(){
 			mainSection.classList.remove('hidden');
 			mainSection.classList.add('visible');
-			if (docType == 'recadv') {
-				forRecadv.style.height='32px';
-				forRecadv.classList.remove('hidden');
-				forRecadv.classList.add('visible');
+		});
+		radioButtons[r].addEventListener('click', function(){
+			let height,
+				opa;
+			if (docType == 'recadv' && displayCode == 1) {
+				height = 32;
+				opa = 1;
+				forRecadv.style.height = height  +'px';
+				forRecadv.style.opacity = opa;
+				displayCode = 2;
+			}
+			else if (docType == 'recadv' && displayCode == 3) {
+				height = 0;
+				opa = 0;
+				let ap = setInterval(appear, 20);
+				function appear() {
+					height+=2;
+					opa = opa + 0.1
+					forRecadv.style.height = height+'px';
+					forRecadv.style.opacity = opa;
+					if (height >= 32) {clearInterval(ap)}
+					displayCode = 2;
+				};
+			}
+			else if (docType != 'recadv' && displayCode == 1) {
+				height = 0;
+				opa = 0;
+				forRecadv.style.height=height+'px';
+				forRecadv.style.opacity = opa;
+				displayCode = 3;
+			}
+			else if (docType != 'recadv' && displayCode == 2) {
+				height = 32;
+				opa = 1;
+				let disAp = setInterval(disappear, 20);
+				function disappear() {
+					height-=2;
+					opa = opa - 0.1
+					forRecadv.style.height=height+'px';
+					forRecadv.style.opacity = opa;
+					if (height <= 0) {clearInterval(disAp)}
+					displayCode = 3;
+				};
+			}
+		});
+		radioButtons[r].addEventListener('click', function(){
+			docVerInput = document.getElementById('doc-ver'),
+			docNumberInput = document.getElementById('doc-number');
+			if (docType == 'ordrsp') {
+				docVerInput.style.width = '14%';
+				docNumberInput.style.width = '40%';
+				
+				let t = setTimeout(function(){
+					docVerInput.style.display = 'inline-flex';
+				},200)
 			}
 			else {
-				forRecadv.style.height='0';
+				docVerInput.style.width = 0;
+				docNumberInput.style.width = '57%';
+				docVerInput.style.display = 'none';
 			}
 		});
 		radioButtons[r].addEventListener('click', docNumberRefresh);
 	};
 
 
-// 2nd step - exdanding form - adding posotions
+// 2nd step - expanding form - adding posotions
 // elements for positions section
 	let pos1 = '<div class="good"><div class="cont"><div class="col-1 item-number"><h6 class=>Item ',
 		pos2 = '</h6></div></div><div class="cont"><div class="col-1 good-header"><label>Item name</label><input type="text" class="good-name" maxlength="180"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>Tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
