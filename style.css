@@ -375,11 +375,48 @@ select option {
 .about-header h6 {
 	line-height: 18px;
 }
-.about-header .close{
+.about-header .close {
 	position: absolute;
 	top: 2px;
 	right: 10px;
+	height: 14px;
+	width: 14px;
+	border-radius: 3px;
 	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.about-header .close:hover {
+	position: absolute;
+	top: 2px;
+	right: 10px;
+	height: 14px;
+	width: 14px;
+	background-color: #b1b1b1;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+.about-header .close::before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 6px;
+	height: 13px;
+	width: 1px;
+	background-color: #1A2942;
+	transform: rotate(45deg);
+}
+.about-header .close::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 6px;
+	height: 13px;
+	width: 1px;
+	background-color: #1A2942;
+	transform: rotate(-45deg);
 }
 .about-body {
 	height: 170px;
