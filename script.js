@@ -321,7 +321,7 @@ window.onload = function() {
 		}
 		if (readyStatus == false) {
 			readyStatus = true;
-			displayCode = 1;
+			// displayCode = 1; - it was needed for smooth expanding of desadv area
 		}
 	};
 	let r;
@@ -332,64 +332,71 @@ window.onload = function() {
 			mainSection.classList.add('visible');
 		});
 		radioButtons[r].addEventListener('click', function(){
-			let height,
-				opa;
-			if (docType == 'recadv' && displayCode == 1) {
-				height = 32;
-				opa = 1;
-				forRecadv.style.height = height  +'px';
-				forRecadv.style.opacity = opa;
-				displayCode = 2;
+			if (docType == 'recadv') {
+				forRecadv.classList.remove('hidden');
+				forRecadv.classList.add('visible');
+				forRecadv.style.display = 'flex';
 			}
-			else if (docType == 'recadv' && displayCode == 3) {
-				height = 0;
-				opa = 0;
-				let ap = setInterval(appear, 20);
-				function appear() {
-					height+=2;
-					opa = opa + 0.1
-					forRecadv.style.height = height+'px';
-					forRecadv.style.opacity = opa;
-					if (height >= 32) {clearInterval(ap)}
-					displayCode = 2;
-				};
+			else {
+				forRecadv.classList.remove('visible');
+				forRecadv.classList.add('hidden');
+				forRecadv.style.display = 'none';
 			}
-			else if (docType != 'recadv' && displayCode == 1) {
-				height = 0;
-				opa = 0;
-				forRecadv.style.height=height+'px';
-				forRecadv.style.opacity = opa;
-				displayCode = 3;
-			}
-			else if (docType != 'recadv' && displayCode == 2) {
-				height = 32;
-				opa = 1;
-				let disAp = setInterval(disappear, 20);
-				function disappear() {
-					height-=2;
-					opa = opa - 0.1
-					forRecadv.style.height=height+'px';
-					forRecadv.style.opacity = opa;
-					if (height <= 0) {clearInterval(disAp)}
-					displayCode = 3;
-				};
-			}
+			// tried to make smooth expanding of desadv area
+			
+			// let height,
+			// 	opa;
+			// if (docType == 'recadv' && displayCode == 1) {
+			// 	height = 32;
+			// 	opa = 1;
+			// 	forRecadv.style.height = height  +'px';
+			// 	forRecadv.style.opacity = opa;
+			// 	displayCode = 2;
+			// }
+			// else if (docType == 'recadv' && displayCode == 3) {
+			// 	height = 0;
+			// 	opa = 0;
+			// 	let ap = setInterval(appear, 20);
+			// 	function appear() {
+			// 		height+=2;
+			// 		opa = opa + 0.1
+			// 		forRecadv.style.height = height+'px';
+			// 		forRecadv.style.opacity = opa;
+			// 		if (height >= 32) {clearInterval(ap)}
+			// 		displayCode = 2;
+			// 	};
+			// }
+			// else if (docType != 'recadv' && displayCode == 1) {
+			// 	height = 0;
+			// 	opa = 0;
+			// 	forRecadv.style.height=height+'px';
+			// 	forRecadv.style.opacity = opa;
+			// 	displayCode = 3;
+			// }
+			// else if (docType != 'recadv' && displayCode == 2) {
+			// 	height = 32;
+			// 	opa = 1;
+			// 	let disAp = setInterval(disappear, 20);
+			// 	function disappear() {
+			// 		height-=2;
+			// 		opa = opa - 0.1
+			// 		forRecadv.style.height=height+'px';
+			// 		forRecadv.style.opacity = opa;
+			// 		if (height <= 0) {clearInterval(disAp)}
+			// 		displayCode = 3;
+			// 	};
+			// }
 		});
 		radioButtons[r].addEventListener('click', function(){
 			docVerInput = document.getElementById('doc-ver'),
 			docNumberInput = document.getElementById('doc-number');
 			if (docType == 'ordrsp') {
-				docVerInput.style.width = '14%';
+				docVerInput.style.display = 'inline-flex';
 				docNumberInput.style.width = '40%';
-				
-				let t = setTimeout(function(){
-					docVerInput.style.display = 'inline-flex';
-				},200)
 			}
 			else {
-				docVerInput.style.width = 0;
-				docNumberInput.style.width = '57%';
 				docVerInput.style.display = 'none';
+				docNumberInput.style.width = '57%';
 			}
 		});
 		radioButtons[r].addEventListener('click', docNumberRefresh);

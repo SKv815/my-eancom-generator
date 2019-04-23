@@ -225,7 +225,7 @@ input {
 	border-radius: 5px;
 	padding: 0 5px;
 	outline: none;
-	transition: all 0.2s ease;
+	transition: border-color 0.2s ease;
 }
 input:focus {
 	border-width: 2px;
