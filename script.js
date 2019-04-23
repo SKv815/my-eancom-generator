@@ -467,20 +467,16 @@ window.onload = function() {
 	function getData(){
 		let docNumber = document.getElementById('doc-number').value,
 			docVer = document.getElementById('doc-ver').value,
-			docDate = document.getElementById('date-doc').value,
-			deliveryDate = document.getElementById('date-delivery').value,
-			receivingDate = document.getElementById('date-receiving').value,
+			docDate = document.getElementById('date-doc').value.replace(/-/g,""),
+			deliveryDate = document.getElementById('date-delivery').value.replace(/-/g,""),
+			receivingDate = document.getElementById('date-receiving').value.replace(/-/g,""),
 			orderNumber = document.getElementById('order-number').value,
 			orderVer = document.getElementById('order-ver').value,
-			orderDate = document.getElementById('date-order').value,
+			orderDate = document.getElementById('date-order').value.replace(/-/g,""),
 			comment = document.getElementById('comment').value;
 		distrGln = document.getElementById('gln-by').value,
 		supplierGln = document.getElementById('gln-su').value,
 		deliveryPointGln = document.getElementById('gln-dt').value;
-
-		docDate = docDate.replace(/-/g,"");
-		orderDate = orderDate.replace(/-/g,"");
-		deliveryDate = deliveryDate.replace(/-/g,"");
 
 		let goodNames = document.getElementsByClassName('good-name'),
 			goodOrderUnits = document.getElementsByClassName('good-order-unit'),
@@ -591,7 +587,7 @@ window.onload = function() {
 				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+tab+sg10Close+xmlDocumentSummary;
 			}
 			else if(docType=='recadv'){
-				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'35'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
+				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'35'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'50'+e2005Close+tab3+e2380Open+receivingDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
 				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
 			}
 			else {
