@@ -273,7 +273,9 @@ window.onload = function() {
 		distrGln = document.getElementById('gln-by'),
 		supplierGln = document.getElementById('gln-su'),
 		deliveryPointGln = document.getElementById('gln-dt'),
-		forRecadv = document.getElementsByClassName('for-recadv')[0];
+		forRecadv = document.getElementsByClassName('for-recadv')[0],
+		confirmedOrShipped,
+		isRecadv;
 
 // Header inputs trim
 	function integersOnly (){
@@ -333,17 +335,14 @@ window.onload = function() {
 		});
 		radioButtons[r].addEventListener('click', function(){
 			if (docType == 'recadv') {
-				forRecadv.classList.remove('hidden');
-				forRecadv.classList.add('visible');
-				forRecadv.style.display = 'flex';
+				forRecadv.style.opacity = 1;
 			}
 			else {
-				forRecadv.classList.remove('visible');
-				forRecadv.classList.add('hidden');
-				forRecadv.style.display = 'none';
+				forRecadv.style.opacity = 0;
 			}
-			// tried to make smooth expanding of desadv area
-			
+
+			// tried to make smooth expanding of desadv area. It warked fine on fullsize but there was problems in adaptive
+
 			// let height,
 			// 	opa;
 			// if (docType == 'recadv' && displayCode == 1) {
@@ -399,6 +398,36 @@ window.onload = function() {
 				docNumberInput.style.width = '57%';
 			}
 		});
+		radioButtons[r].addEventListener('click', function(){
+			let confirmedLables = document.getElementsByClassName('good-confirmed');
+			let confirmedLable;
+			if (docType == 'ordrsp') {confirmedOrShipped = 'Confirmed'}
+			else if (docType == 'desadv') {confirmedOrShipped = 'Shipped'}
+			else if (docType == 'recadv') {confirmedOrShipped = 'Shipped'}
+			else {error('Unexpected doctype')}
+			for (var i = 0; i < confirmedLables.length; i++) {
+				confirmedLable = confirmedLables[i].previousElementSibling;
+				confirmedLable.innerHTML = confirmedOrShipped;
+			}
+			let receiveParents = document.getElementsByClassName('good-received');
+			let receiveParent;
+			if (docType == 'recadv') {
+				for (var i = 0; i < receiveParents.length; i++) {
+					receiveParent = receiveParents[i].parentNode;
+					receiveParent.classList.remove('hidden');
+					receiveParent.classList.add('visible');
+				}
+				isRecadv = 'visible';
+			}
+			else {
+				for (var i = 0; i < receiveParents.length; i++) {
+					receiveParent = receiveParents[i].parentNode;
+					receiveParent.classList.remove('visible');
+					receiveParent.classList.add('hidden');
+				}
+				isRecadv = 'hidden';
+			}
+		});
 		radioButtons[r].addEventListener('click', docNumberRefresh);
 	};
 
@@ -406,7 +435,9 @@ window.onload = function() {
 // 2nd step - expanding form - adding posotions
 // elements for positions section
 	let pos1 = '<div class="good"><div class="cont"><div class="col-1 item-number"><h6 class=>Item ',
-		pos2 = '</h6></div></div><div class="cont"><div class="col-1 good-header"><label>Item name</label><input type="text" class="good-name" maxlength="180"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>Confirmed</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Shipped</label><input type="text" class="good-shipped"></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>Tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div></div></div>';
+		pos2 = '</h6></div></div><div class="cont"><div class="col-1 good-header"><label>Item name</label><input type="text" class="good-name" maxlength="180"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>',
+		pos3 = '</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>Tax rate</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="20%"></div><div class="col-2 input-item ',
+		pos4 = '"><label>Received</label><input type="text" class="good-received"></div></div></div>';
 	let expandActive = false;
 	next.addEventListener('click', function(){
 		if (expandActive == false) {
@@ -418,7 +449,7 @@ window.onload = function() {
 			let e = 1;
 			let a = setInterval(expand, 70);
 			function expand() {
-				goodsSection.innerHTML += pos1+e+pos2;
+				goodsSection.innerHTML += pos1+e+pos2+confirmedOrShipped+pos3+isRecadv+pos4;
 				e++;
 				if (e > positions) {
 					clearInterval(a);
@@ -457,7 +488,8 @@ window.onload = function() {
 			goodArts = document.getElementsByClassName('good-art'),
 			goodOrdered = document.getElementsByClassName('good-ordered'),
 			goodConfirmed = document.getElementsByClassName('good-confirmed'),
-			goodShipped = document.getElementsByClassName('good-shipped'),
+			goodShipped = document.getElementsByClassName('good-confirmed'),
+			goodReceived = document.getElementsByClassName('good-received'),
 			goodPceInPa = document.getElementsByClassName('good-pceinpa'),
 			goodPriceClear = document.getElementsByClassName('good-pricenovat'),
 			goodPriceVat = document.getElementsByClassName('good-pricevat'),
