@@ -249,7 +249,31 @@ window.onload = function() {
 		sg43Open = lb+'SG43'+rb,
 		sg43Close = clb+'SG43'+crb,
 		e1060Open = lb+'E1060'+rb,
-		e1060Close = clb+'E1060'+crb;
+		e1060Close = clb+'E1060'+crb,
+		sg4Open = lb+'SG4'+rb,
+		sg4Close = clb+'SG4'+crb,
+		sg5Open = lb+'SG5'+rb,
+		sg5Close = clb+'SG5'+crb,
+		c080Open = lb+'C080'+rb,
+		c080Close = clb+'C080'+crb,
+		e3036Open = lb+'E3036'+rb,
+		e3036Close = clb+'E3036'+crb,
+		sg16Open = lb+'SG16'+rb,
+		sg16Close = clb+'SG16'+crb,
+		sg22Open = lb+'SG22'+rb,
+		sg22Close = clb+'SG22'+crb,
+		qvrOpen = lb+'QVR'+rb,
+		qvrClose = clb+'QVR'+crb,
+		c279Open = lb+'C279'+rb,
+		c279Close = clb+'C279'+crb,
+		e6064Open = lb+'E6064'+rb,
+		e6064Close = clb+'E6064'+crb,
+		c960Open = lb+'C960'+rb,
+		c960Close = clb+'C960'+crb,
+		e4295Open = lb+'E4295'+rb,
+		e4295Close = clb+'E4295'+crb,
+		e4294Open = lb+'E4294'+rb,
+		e4294Close = clb+'E4294'+crb;
 
 	let loader = document.createElement('div');
 	loader.classList.add('loader');
@@ -336,9 +360,12 @@ window.onload = function() {
 		radioButtons[r].addEventListener('click', function(){
 			if (docType == 'recadv') {
 				forRecadv.style.opacity = 1;
+				forRecadv.style.maxHeight = '10px';
+				forRecadv.style.maxHeight = '300px';
 			}
 			else {
 				forRecadv.style.opacity = 0;
+				forRecadv.style.maxHeight = 0;
 			}
 
 			// tried to make smooth expanding of desadv area. It warked fine on fullsize but there was problems in adaptive
@@ -437,7 +464,7 @@ window.onload = function() {
 	let pos1 = '<div class="good"><div class="cont"><div class="col-1 item-number"><h6 class=>Item ',
 		pos2 = '</h6></div></div><div class="cont"><div class="col-1 good-header"><label>Item name</label><input type="text" class="good-name" maxlength="180"></div><div class="col-2 input-item"><label>Order unit</label><select name="good-order-unit" class="good-order-unit"><option value="PA">Packages</option><option value="PCE">Pieces</option></select></div><div class="col-2 input-item"><label>Pieces in package</label><input type="text" class="good-pceinpa"></div><div class="col-2 input-item"><label>GTIN code</label><input type="text" class="good-gtin" maxlength="20" placeholder="upc, ean or gtin"></div><div class="col-2 input-item"><label>Art.</label><input type="text" class="good-art"></div><div class="col-2 input-item"><label>Ordered</label><input type="text" class="good-ordered"></div><div class="col-2 input-item"><label>',
 		pos3 = '</label><input type="text" class="good-confirmed"></div><div class="col-2 input-item"><label>Price without VAT</label><input type="text" class="good-pricenovat"></div><div class="col-2 input-item"><label>Price with VAT</label><input type="text" class="good-pricevat"></div><div class="col-2 input-item"><label>Tax rate %</label><input class="tax" type="number" class="good-vat" min="0" max="100" placeholder="e.g. 18"></div><div class="col-2 input-item ',
-		pos4 = '"><label>Received</label><input type="text" class="good-received"></div></div></div>';
+		pos4 = '"><label>Received</label><input type="text" class="good-received new"></div></div></div>';
 	let expandActive = false;
 	next.addEventListener('click', function(){
 		if (expandActive == false) {
@@ -473,7 +500,8 @@ window.onload = function() {
 			orderNumber = document.getElementById('order-number').value,
 			orderVer = document.getElementById('order-ver').value,
 			orderDate = document.getElementById('date-order').value.replace(/-/g,""),
-			comment = document.getElementById('comment').value;
+			comment = document.getElementById('comment').value,
+			desadvNumber = document.getElementById('desadv-number').value;
 		distrGln = document.getElementById('gln-by').value,
 		supplierGln = document.getElementById('gln-su').value,
 		deliveryPointGln = document.getElementById('gln-dt').value;
@@ -511,8 +539,11 @@ window.onload = function() {
 				xmlDocumentGoodsMoa = '',
 				xmlDocumentGoodsSg30Sg36 = '',
 				xmlDocumentGoods = '',
+				xmlDocumentGoodsPre = '',
+				xmlDocumentGoodsPost = '',
 				xmlDocumentMoa = '',
 				xmlDocumentMoaFtx = '',
+				xmlDocumentQvrPri = '',
 				xmlDocumentSummary = '',
 				xmlDocumentGoodsAliDtmFtx = '',
 				xmlDocumentGoodsSg18Sg20 = '',
@@ -554,6 +585,7 @@ window.onload = function() {
 					xmlDocumentGoods += tab+sg26Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsQty+xmlDocumentGoodsMoa+xmlDocumentGoodsSg30Sg36+tab+sg26Close;	
 				};
 				xmlDocumentMoa = tab+unsOpen+br+tab2+e0081Open+'s'+e0081Close+tab+unsClose+tab+moaOpen+br+tab3+c516Open+br+tab3+e5025Open+'79'+e5025Close+tab3+e5004Open+sumClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+sumWithVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+sumVat+e5004Close+tab2+c516Close+tab+moaClose;
+				
 				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentComments+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentMoa+xmlDocumentSummary;
 			}
 			else if(docType=='desadv'){
@@ -582,13 +614,36 @@ window.onload = function() {
 				xmlDocumentMoaFtx = tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'86'+e5025Close+tab3+e5004Open+sumWithVat+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'125'+e5025Close+tab3+e5004Open+sumClear+e5004Close+tab2+c516Close+tab+moaClose+tab+moaOpen+br+tab2+c516Open+br+tab3+e5025Open+'124'+e5025Close+tab3+e5004Open+sumVat+e5004Close+tab2+c516Close+tab+moaClose+tab+ftxOpen+br+tab2+e4451Open+'ZZZ'+e4451Close+tab2+c108Open+br+tab3+e4440Open+e4440Close+tab2+c108Close+tab+ftxClose;
 				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'on'+e1153Close+tab4+e1154Open+'<p class="no-transform">'+orderNumber+'</p>'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'AWC'+e1153Close+tab4+e1154Open+e1154Close+tab3+c506Close+tab2+rffClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'IV'+e1153Close+tab4+e1154Open+'01/00000001-19'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+deliveryDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
 				xmlDocumentParticipants = tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'su'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg2Open+br+tab2+nadOpen+br+tab3+e3035Open+'dp'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab2+nadClose+tab+sg2Close+tab+sg10Open+br+tab2+cpsOpen+br+tab3+e7164Open+'1'+e7164Close+tab2+cpsClose;
-					
 
 				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentMoaFtx+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoods+tab+sg10Close+xmlDocumentSummary;
 			}
 			else if(docType=='recadv'){
-				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'35'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'50'+e2005Close+tab3+e2380Open+receivingDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+ftxOpen+br+tab2+e4451Open+'ZZZ'+e4451Close+tab2+c108Open+br+tab3+e4440Open+e4440Close+tab2+c108Close+tab+ftxClose;
-				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentParticipants+xmlDocumentGoods+xmlDocumentSummary;
+				xmlDocumentDtm = tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'35'+e2005Close+tab3+e2380Open+deliveryDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'50'+e2005Close+tab3+e2380Open+receivingDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose+tab+dtmOpen+br+tab2+c507Open+br+tab3+e2005Open+'137'+e2005Close+tab3+e2380Open+docDate+e2380Close+tab3+e2379Open+'102'+e2379Close+tab2+c507Close+tab+dtmClose;
+				xmlDocumentComments = tab+ftxOpen+br+tab2+e4451Open+'ZZZ'+e4451Close+tab2+c108Open+br+tab3+e4440Open+e4440Close+tab2+c108Close+tab+ftxClose;
+				xmlDocumentMessageDetails = tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'IV'+e1153Close+tab4+e1154Open+'<p class="no-transform">'+desadvNumber+'</p>'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+docDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'ON'+e1153Close+tab4+e1154Open+'<p class="no-transform">'+orderNumber+'</p>'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+orderDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close+tab+sg1Open+br+tab2+rffOpen+br+tab3+c506Open+br+tab4+e1153Open+'AKK'+e1153Close+tab4+e1154Open+'<p class="no-transform">'+desadvNumber+'</p>'+e1154Close+tab3+c506Close+tab2+rffClose+tab2+dtmOpen+br+tab3+c507Open+br+tab4+e2005Open+'171'+e2005Close+tab4+e2380Open+docDate+e2380Close+tab4+e2379Open+'102'+e2379Close+tab3+c507Close+tab2+dtmClose+tab+sg1Close;
+				xmlDocumentParticipants = tab+sg4Open+br+tab2+nadOpen+br+tab3+e3035Open+'SU'+e3035Close+tab3+c082Open+br+tab4+e3039Open+supplierGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab3+c080Open+br+tab4+e3036Open+e3036Close+tab3+c080Close+tab2+nadClose+tab2+sg5Open+br+tab3+rffOpen+br+tab4+c506Open+br+tab5+e1153Open+'YC1'+e1153Close+tab5+e1154Open+e1154Close+tab4+c506Close+tab3+rffClose+tab2+sg5Close+tab+sg4Close+tab+sg4Open+br+tab2+nadOpen+br+tab3+e3035Open+'BY'+e3035Close+tab3+c082Open+br+tab4+e3039Open+distrGln +e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab3+c080Open+br+tab4+e3036Open+e3036Close+tab3+c080Close+tab2+nadClose+tab2+sg5Open+br+tab3+rffOpen+br+tab4+c506Open+br+tab5+e1153Open+'YC1'+e1153Close+tab5+e1154Open+e1154Close+tab4+c506Close+tab3+rffClose+tab2+sg5Close+tab+sg4Close+tab+sg4Open+br+tab2+nadOpen+br+tab3+e3035Open+'DP'+e3035Close+tab3+c082Open+br+tab4+e3039Open+deliveryPointGln+e3039Close+tab4+e3055Open+'9'+e3055Close+tab3+c082Close+tab3+c080Open+br+tab4+e3036Open+e3036Close+tab3+c080Close+tab2+nadClose+tab2+sg5Open+br+tab3+rffOpen+br+tab4+c506Open+br+tab5+e1153Open+'YC1'+e1153Close+tab5+e1154Open+e1154Close+tab4+c506Close+tab3+rffClose+tab2+sg5Close+tab+sg4Close;
+				xmlDocumentGoodsPre = tab+sg10Open+br+tab2+tdtOpen+br+tab3+e8051Open+'30'+e8051Close+tab3+c222Open+br+tab4+e8212Open+e8212Close+tab3+c222Close+tab2+tdtClose+tab+sg10Close+tab+sg16Open+br+tab2+cpsOpen+br+tab3+e7164Open+'1'+e7164Close+tab2+cpsClose;
+				xmlDocumentGoodsPost = tab+sg16Close;
+				for (let i = 0; i <= positions-1; i++) {
+					let goodPriceClearTrim = goodPriceClear[i].value.replace(/ /g,"").replace(/,/g,".");
+						goodPriceVatTrim = goodPriceVat[i].value.replace(/ /g,"").replace(/,/g,".");
+						lineValueClear = Math.round((goodPriceClearTrim*goodConfirmed[i].value)*100)/100;
+						lineValueVat = Math.round((goodPriceVatTrim*goodConfirmed[i].value)*100)/100;
+					sumClearArr.push(lineValueClear);
+					sumWithVatArr.push(lineValueVat);
+					sumClear += (Math.round((sumClearArr[i])*100))/100;
+					sumWithVat += (Math.round((sumWithVatArr[i])*100))/100;
+					sumVat = (Math.round((sumWithVat-sumClear)*100))/100;
+					
+					xmlDocumentGoodsLin = tab3+linOpen+br+tab4+e1082Open+(i+1)+e1082Close+tab4+c212Open+br+tab5+e7140Open+goodGtins[i].value+e7140Close+br+tab5+e7143Open+'srv'+e7143Close+tab4+c212Close+tab3+linClose;
+					xmlDocumentGoodsPia = tab3+piaOpen+br+tab4+e4347Open+'1'+e4347Close+br+tab4+c212Open+br+tab5+e7140Open+goodArts[i].value+e7140Close+tab5+e7143Open+'sa'+e7143Close+tab4+c212Close+tab3+piaClose;
+					xmlDocumentGoodsImd = tab3+imdOpen+br+tab4+e7077Open+'f'+e7077Close+tab4+c273Open+br+tab5+e7008Open+'<p class="no-transform">'+goodNames[i].value+'</p>'+e7008Close+tab4+c273Close+tab3+imdClose;
+					xmlDocumentGoodsQty = tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'12'+e6063Close+tab5+e6060Open+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose+tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'46'+e6063Close+tab5+e6060Open+(goodConfirmed[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose+tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'21'+e6063Close+tab5+e6060Open+(goodOrdered[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose+tab3+qtyOpen+br+tab4+c186Open+br+tab5+e6063Open+'194'+e6063Close+tab5+e6060Open+(goodReceived[i].value+'.000')+e6060Close+tab5+e6411Open+goodOrderUnits[i].value+e6411Close+tab4+c186Close+tab3+qtyClose;
+					xmlDocumentQvrPri = tab3+qvrOpen+br+tab4+c279Open+br+tab5+e6064Open+'0.000'+e6064Close+tab5+e6063Open+'195'+e6063Close+tab4+c279Close+tab4+c960Open+br+tab5+e4295Open+e4295Close+tab5+e4294Open+e4294Close+tab4+c960Close+tab3+qvrClose+tab3+priOpen+br+tab4+c509Open+br+tab5+e5125Open+'AAA'+e5125Close+tab5+e5118Open+e5118Close+tab4+c509Close+tab3+priClose;
+					xmlDocumentGoods += tab2+sg22Open+br+xmlDocumentGoodsLin+xmlDocumentGoodsPia+xmlDocumentGoodsImd+xmlDocumentGoodsQty+xmlDocumentQvrPri+br+tab2+sg22Close;	
+				};
+
+				xmlDocument = xmlDocumentHeader+xmlDocumentDtm+xmlDocumentComments+xmlDocumentMessageDetails+xmlDocumentParticipants+xmlDocumentGoodsPre+xmlDocumentGoods+xmlDocumentGoodsPost+xmlDocumentSummary;
 			}
 			else {
 				error('Error in doctype...');
@@ -684,7 +739,7 @@ window.onload = function() {
 
 // "product" version
 	let version = document.getElementsByClassName('version')[0];
-		version.innerHTML = '0.0.9';
+		version.innerHTML = '0.9.1';
 
 // auto filling doc number
 	let orderNumberAf = document.getElementById('order-number'),
