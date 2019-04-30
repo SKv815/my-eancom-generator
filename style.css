@@ -300,9 +300,7 @@ select option {
 	z-index: 20;
 }
 .btn:active {
-	box-shadow: -1px -1px 1px #333;
-	right: 39px;
-	bottom: 39px;
+	box-shadow: inset 1px 1px 1px #333;
 }
 #next {
 	font-family: Arial, sans-serif;
@@ -523,6 +521,9 @@ select option {
 		top: 40px; 
 		bottom: auto;
 	}
+	#code {
+		min-height: 100px;
+	}
 }
 @media screen and (max-width: 450px) {
 	.sign {
@@ -571,6 +572,24 @@ select option {
 	.menu {
 		display: none;
 	}
+	.btn {
+		width: 80%;
+		right: 20%;
+		margin-right: -10%;
+	}
+	#start {
+		bottom: 20px;
+	}
+	#copy {
+		top: 20px;
+	}
+	#code {
+		padding-top: 70px;
+	}
+	.good:last-child {
+		margin-bottom: 0;
+	}
+	
 }
 @media screen and (max-width: 170px) {
 	* {
