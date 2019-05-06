@@ -299,7 +299,10 @@ window.onload = function() {
 		deliveryPointGln = document.getElementById('gln-dt'),
 		forRecadv = document.getElementsByClassName('for-recadv')[0],
 		confirmedOrShipped,
-		isRecadv;
+		isRecadv,
+		eancom = document.getElementById('eancom'),
+		dbPre = document.getElementsByClassName('db')[0],
+		dbPost = document.getElementsByClassName('db')[1];
 
 // Header inputs trim
 	function integersOnly (){
@@ -650,27 +653,40 @@ window.onload = function() {
 			}
 			
 		};
+		let senderGln,
+			reveiverGln;
+		if (docType == 'recadv') {
+			senderGln = distrGln;
+			reveiverGln = supplierGln;
+		}
+		else {
+			senderGln = supplierGln;
+			reveiverGln = distrGln;
+		}
+
+		dbPre.innerHTML = ("alter session set NLS_NUMERIC_CHARACTERS = ',.'; <br/>declare <br/> err_msg   varchar2 (1000);<br/> p_file_id number;<br/> p_doc_id  number;<br/>   v_clob clob;<br/><br>begin<br>v_clob:='<br/>");
+		dbPost.innerHTML = ("';<br/><br/>EDI_API_PKG.Add_Edi_Doc(p_doc_type =>'"+"<p style ='text-transform: uppercase; display: inline-block;'>"+docType+"</p>"+"',<br/> p_sender_gln =>'"+senderGln+"',<br/> p_receiver_gln =>'"+reveiverGln+"',<br/> p_need_eds=>0,<br/> err_msg=>err_msg,<br/> p_file_id=>p_file_id,<br/> p_doc_id  =>p_doc_id,<br/> p_doc_body =>v_clob<br/> ) ;<br/> commit;<br/>end;");
 		createEancom();
-		codeField.innerHTML = xmlDocument;
+		eancom.innerHTML = xmlDocument;
  	};
 	
 	btnStart.addEventListener('click', function startCheck() {
 		if (readyStatus == false) {
-			codeField.innerHTML = 'Please select document type';
+			eancom.innerHTML = 'Please select document type';
 		}
 		else if (readyStatus == true && readyStatus2 == false) {
-			codeField.innerHTML = 'Complete the form (next)';
+			eancom.innerHTML = 'Complete the form (next)';
 		}
 		else if (readyStatus == true && readyStatus2 == true) {
-			codeField.innerHTML = '';
-			codeField.appendChild(loader);
+			eancom.innerHTML = '';
+			eancom.appendChild(loader);
 			setTimeout(getData,300);
 		}
 		else {
 			error('Error in ready status...');
 		}
 	});
-	
+
 	btnCopy.addEventListener('click', function () {
 		let result = document.getElementById('code');
 		let range = document.createRange();
@@ -739,7 +755,7 @@ window.onload = function() {
 
 // "product" version
 	let version = document.getElementsByClassName('version')[0];
-		version.innerHTML = '0.9.1';
+		version.innerHTML = '0.9.2';
 
 // auto filling doc number
 	let orderNumberAf = document.getElementById('order-number'),

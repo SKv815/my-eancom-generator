@@ -330,8 +330,6 @@ select option {
 /* ##### code style ##### */
 #code {
 	background: #1A2942;
-	text-transform: uppercase;
-	color: white;
 }
 .brackets, .slash {
 	color: silver;
@@ -343,6 +341,15 @@ select option {
 .tab {
 	letter-spacing: 0.2rem;
 }
+#eancom {
+	text-transform: uppercase;
+	color: white;
+}
+.db {
+		text-transform: none;
+		opacity: 0;
+		max-height: 0;
+	}
 
 /* ##### notifications and loader ##### */
 .overlay {
