@@ -585,25 +585,21 @@ select option {
 	right: 0;
 	padding-right: 25px;
 	cursor: pointer;
+	transition: color 0.2s linear;
 }
-.clear::after {
-	content: "";
-	display: block;
+.clear:hover {
+	color: #0e3d87;
+	transition: color 0.2s linear;
+}
+.clear-icon {
 	position: absolute;
 	top: 0;
 	right: 0;
 	height: 20px;
 	width: 20px;
-	background: url("img/refresh.png") 50% no-repeat;
+	border-radius: 50%;
+	background: url("img/refresh.png") center no-repeat;
 	background-size: contain;
-	transition: all 0.1s linear;
-}
-.clear:hover {
-	color: #0e3d87;
-}
-.clear:hover::after {
-	transform: rotate(45deg);
-	transition: all 0.1s linear;
 }
 /* ##### media ##### */
 @media screen and (max-width: 1000px) {
@@ -711,7 +707,6 @@ select option {
 	.good:last-child {
 		margin-bottom: 80px;
 	}
-	
 }
 @media screen and (max-width: 320px) {
 	* {

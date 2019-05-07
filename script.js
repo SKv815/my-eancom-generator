@@ -303,8 +303,8 @@ window.onload = function() {
 		eancom = document.getElementById('eancom'),
 		dbPre = document.getElementsByClassName('db')[0],
 		dbPost = document.getElementsByClassName('db')[1],
-		clearAll = document.getElementsByClassName('clear')[0],
-		clearGoods = document.getElementsByClassName('clear')[1];
+		clearAllBtn = document.getElementsByClassName('clear')[0],
+		clearGoodsBtn = document.getElementsByClassName('clear')[1];
 
 // Header inputs trim
 	function integersOnly (){
@@ -762,10 +762,6 @@ window.onload = function() {
 		alertWindow.classList.remove('visible');
 	});
 
-// "product" version
-	let version = document.getElementsByClassName('version')[0];
-		version.innerHTML = '0.9.2';
-
 // auto filling doc number
 	let orderNumberAf = document.getElementById('order-number'),
 		docNumberAf = document.getElementById('doc-number');
@@ -776,26 +772,49 @@ window.onload = function() {
 			orderNumber = document.getElementById('order-number').value;
 		docNumberAf.value = docType+'-'+orderNumber;
 	}
+
 // clear fields
-	clearAll.addEventListener('click',function(){
-		document.getElementById('doc-number').value = docType + '-';
-		document.getElementById('doc-ver').value = '';
-		document.getElementById('date-doc').value = '';
-		document.getElementById('date-delivery').value = '';
-		document.getElementById('date-receiving').value = '';
-		document.getElementById('order-number').value = '';
-		document.getElementById('order-ver').value = '';
-		document.getElementById('date-order').value = '';
-		document.getElementById('comment').value = '';
-		document.getElementById('desadv-number').value = '';
-		document.getElementById('gln-by').value = '';
-		document.getElementById('gln-su').value = '';
-		document.getElementById('gln-dt').value = '';
-	});
-	clearGoods.addEventListener('click',function(){
+	function clearMain(){
+		let mainInputs = document.querySelectorAll('.main-section input');
+		for (let i = 1; i <= mainInputs.length-1; i++) {
+			mainInputs[i].value = '';
+		}
+		if (readyStatus) {
+			document.getElementById('doc-number').value = docType + '-';	
+		}		
+	};
+	function clearGoods() {
 		let allGoodsInputs = document.querySelectorAll('.goods-section input');
-		for (let i = 0; i <= allGoodsInputs.length; i++) {
+		for (let i = 0; i <= allGoodsInputs.length-1; i++) {
 			allGoodsInputs[i].value = '';
 		}
+	};
+
+	clearAllBtn.addEventListener('click',clearMain);
+	clearAllBtn.addEventListener('click',clearGoods);
+	clearAllBtn.addEventListener('click',function(){
+		let clearIcon = document.querySelectorAll('.clear-icon')
+		let clearAnim = setInterval(rotate,10);
+		let r = 0;
+		function rotate(){
+			r+=10;
+			clearIcon[0].style.transform = 'rotate('+r+'deg)';
+			if (r >= 360) {clearInterval(clearAnim)}
+		};
 	});
+	clearGoodsBtn.addEventListener('click',clearGoods);
+	clearGoodsBtn.addEventListener('click',function(){
+		let clearIcon = document.querySelectorAll('.clear-icon')
+		let clearAnim = setInterval(rotate,10);
+		let r = 0;
+		function rotate(){
+			r+=10;
+			clearIcon[1].style.transform = 'rotate('+r+'deg)';
+			if (r >= 360) {clearInterval(clearAnim)}
+		};
+	});
+
+// "product" version
+	let version = document.getElementsByClassName('version')[0];
+		version.innerHTML = '0.9.3';
 }
