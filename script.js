@@ -778,18 +778,24 @@ window.onload = function() {
 	}
 // clear fields
 	clearAll.addEventListener('click',function(){
-		document.getElementById('doc-number').value = '';
+		document.getElementById('doc-number').value = docType + '-';
 		document.getElementById('doc-ver').value = '';
 		document.getElementById('date-doc').value = '';
 		document.getElementById('date-delivery').value = '';
-		// 	receivingDate = document.getElementById('date-receiving').value.replace(/-/g,""),
-		// 	orderNumber = document.getElementById('order-number').value,
-		// 	orderVer = document.getElementById('order-ver').value,
-		// 	orderDate = document.getElementById('date-order').value.replace(/-/g,""),
-		// 	comment = document.getElementById('comment').value,
-		// 	desadvNumber = document.getElementById('desadv-number').value;
+		document.getElementById('date-receiving').value = '';
+		document.getElementById('order-number').value = '';
+		document.getElementById('order-ver').value = '';
+		document.getElementById('date-order').value = '';
+		document.getElementById('comment').value = '';
+		document.getElementById('desadv-number').value = '';
+		document.getElementById('gln-by').value = '';
+		document.getElementById('gln-su').value = '';
+		document.getElementById('gln-dt').value = '';
 	});
 	clearGoods.addEventListener('click',function(){
-		alert('it will clear all goods');
+		let allGoodsInputs = document.querySelectorAll('.goods-section input');
+		for (let i = 0; i <= allGoodsInputs.length; i++) {
+			allGoodsInputs[i].value = '';
+		}
 	});
 }
