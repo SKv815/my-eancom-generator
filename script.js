@@ -302,7 +302,9 @@ window.onload = function() {
 		isRecadv,
 		eancom = document.getElementById('eancom'),
 		dbPre = document.getElementsByClassName('db')[0],
-		dbPost = document.getElementsByClassName('db')[1];
+		dbPost = document.getElementsByClassName('db')[1],
+		clearAll = document.getElementsByClassName('clear')[0],
+		clearGoods = document.getElementsByClassName('clear')[1];
 
 // Header inputs trim
 	function integersOnly (){
@@ -769,9 +771,25 @@ window.onload = function() {
 		docNumberAf = document.getElementById('doc-number');
 	orderNumberAf.addEventListener('input', docNumberRefresh);
 
-		function docNumberRefresh() {
+	function docNumberRefresh() {
 		let docNumber = document.getElementById('doc-number').value,
 			orderNumber = document.getElementById('order-number').value;
 		docNumberAf.value = docType+'-'+orderNumber;
 	}
+// clear fields
+	clearAll.addEventListener('click',function(){
+		document.getElementById('doc-number').value = '';
+		document.getElementById('doc-ver').value = '';
+		document.getElementById('date-doc').value = '';
+		document.getElementById('date-delivery').value = '';
+		// 	receivingDate = document.getElementById('date-receiving').value.replace(/-/g,""),
+		// 	orderNumber = document.getElementById('order-number').value,
+		// 	orderVer = document.getElementById('order-ver').value,
+		// 	orderDate = document.getElementById('date-order').value.replace(/-/g,""),
+		// 	comment = document.getElementById('comment').value,
+		// 	desadvNumber = document.getElementById('desadv-number').value;
+	});
+	clearGoods.addEventListener('click',function(){
+		alert('it will clear all goods');
+	});
 }
