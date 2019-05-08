@@ -320,6 +320,13 @@ window.onload = function() {
 		this.value = this.value.replace(/[^-0-9]/g,'');
 	});
 
+//EXPeriment. How to add goods items instead of full rebuilding goods section
+	function getDifference() {
+		positions = document.getElementById('positions').value;
+		console.log(positions);
+	}
+	let positions1 = document.getElementById('positions');
+	positions1.addEventListener('click', getDifference);
 
 // 1st step - definition of document type
 	function getDocType () {
@@ -463,7 +470,6 @@ window.onload = function() {
 		radioButtons[r].addEventListener('click', docNumberRefresh);
 	};
 
-
 // 2nd step - expanding form - adding posotions
 // elements for positions section
 	let pos1 = '<div class="good"><div class="cont"><div class="col-1 item-number"><h6 class=>Item ',
@@ -480,7 +486,7 @@ window.onload = function() {
 			goodsSection.classList.add('visible');
 			let e = 1;
 			let a = setInterval(expand, 70);
-			function expand() {
+			function expand() {	
 				goodsSection.innerHTML += pos1+e+pos2+confirmedOrShipped+pos3+isRecadv+pos4;
 				e++;
 				if (e > positions) {

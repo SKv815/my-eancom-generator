@@ -305,7 +305,7 @@ select option {
 	border: 1px solid #333;
 	border-radius: 8px;
 	box-shadow: 1px 1px 1px #333;
-	z-index: 20;
+	z-index: 30;
 }
 .btn:active {
 	box-shadow: inset 1px 1px 1px #333;
@@ -555,6 +555,7 @@ select option {
 	margin-left: -20px;
 	border-radius: 50%;
 	border: 5px solid rgba(20, 20, 20, 0.5);
+	z-index: 50;
     -webkit-animation: spin 0.5s linear infinite;
     animation: spin 0.4s linear infinite;
 }
@@ -634,7 +635,7 @@ select option {
 		bottom: auto;
 	}
 	#code {
-		min-height: 100px;
+		min-height: 200px;
 	}
 }
 @media screen and (max-width: 480px) {
@@ -708,7 +709,7 @@ select option {
 		margin-bottom: 80px;
 	}
 }
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 319px) {
 	* {
 		display: none;
 	}
