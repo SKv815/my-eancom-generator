@@ -776,17 +776,24 @@ window.onload = function() {
 // clear fields
 	function clearMain(){
 		let mainInputs = document.querySelectorAll('.main-section input');
-		for (let i = 1; i <= mainInputs.length-1; i++) {
+		for (let i = 1; i <= mainInputs.length - 1; i++) {
 			mainInputs[i].value = '';
 		}
 		if (readyStatus) {
 			document.getElementById('doc-number').value = docType + '-';	
-		}		
+		}
 	};
 	function clearGoods() {
 		let allGoodsInputs = document.querySelectorAll('.goods-section input');
 		for (let i = 0; i <= allGoodsInputs.length-1; i++) {
 			allGoodsInputs[i].value = '';
+		}
+		let allOrderUnits = document.querySelectorAll('.good-order-unit option');
+		for (let ii = 0; ii <= allOrderUnits.length - 1; ii++) {
+			allOrderUnits[ii].removeAttribute('selected');
+		}
+		for (let iii = 0; iii <= allOrderUnits.length - 1; iii+=2) {
+			allOrderUnits[iii].setAttribute('selected', 'selected');
 		}
 	};
 
@@ -794,7 +801,7 @@ window.onload = function() {
 	clearAllBtn.addEventListener('click',clearGoods);
 	clearAllBtn.addEventListener('click',function(){
 		let clearIcon = document.querySelectorAll('.clear-icon')
-		let clearAnim = setInterval(rotate,10);
+		let clearAnim = setInterval(rotate,8);
 		let r = 0;
 		function rotate(){
 			r+=10;
@@ -805,7 +812,7 @@ window.onload = function() {
 	clearGoodsBtn.addEventListener('click',clearGoods);
 	clearGoodsBtn.addEventListener('click',function(){
 		let clearIcon = document.querySelectorAll('.clear-icon')
-		let clearAnim = setInterval(rotate,10);
+		let clearAnim = setInterval(rotate,8);
 		let r = 0;
 		function rotate(){
 			r+=10;
